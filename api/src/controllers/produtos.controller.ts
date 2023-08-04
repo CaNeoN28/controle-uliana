@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 import listProdutos from "../services/list.produtos.service";
 import CreateProdutos from "../services/create.produtos.service";
+import UpdateProduto from "../services/update.produto.service";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
@@ -29,10 +30,9 @@ class ControllerProdutos {
 			const { id } = req.params;
 			const data = req.body;
 
-			res.send({
-				id,
-				...data
-			})
+			const produto = await UpdateProduto(data, id)
+
+			res.send(produto)
 		} catch (error) {
 			next(error);
 		}
