@@ -1,5 +1,6 @@
 import { RequestHandler } from "express";
 import listProdutos from "../services/list.produtos.service";
+import CreateProdutos from "../services/create.produtos.service";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
@@ -14,9 +15,12 @@ class ControllerProdutos {
 
 	static post: RequestHandler = async function (req, res, next) {
 		try {
-			res.send("Post produtos");
-		} catch (error) {
-			next(error);
+			const data = req.body
+			const produto = await CreateProdutos(data)
+
+			res.send(produto)
+		} catch (error: any) {
+			res.send(error.message);
 		}
 	};
 }
