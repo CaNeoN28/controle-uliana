@@ -1,3 +1,7 @@
+import RepositoryProdutos from "../repositories/produtos.repository";
+
 export default async function listProdutos() {
-	return "Produtos"
+	const produtos = await RepositoryProdutos.list();
+
+	return produtos;
 }
