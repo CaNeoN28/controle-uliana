@@ -1,3 +1,5 @@
+import RepositoryProdutos from "../repositories/produtos.repository"
+
 export default async function CreateProdutos(data: any) {
 	if(!data.nome)
 		throw new Error("Nome é obrigatório")
@@ -11,5 +13,6 @@ export default async function CreateProdutos(data: any) {
 	if(!data.codigo)
 		throw new Error("O código é obrigatório")
 
-	return data
+	const produto = RepositoryProdutos.create(data)
+	return produto
 }
