@@ -2,6 +2,7 @@ import express from "express";
 import * as dotenv from "dotenv";
 import dbConnect from "./dbConfig/dbConnect";
 import Produto from "./src/models/Produto";
+import appRouter from "./src/routes";
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ const app = express();
 
 async function startServer() {
 	try {
+		app.use(appRouter)
 		app.get("/", (_req, res) => {
 			res.send("Hello");
 		});
