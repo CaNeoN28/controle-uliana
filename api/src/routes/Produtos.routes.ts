@@ -8,4 +8,8 @@ produtosRoutes
 	.post(ControllerProdutos.post)
 	.get(ControllerProdutos.get);
 
+produtosRoutes
+	.route("/produto/:id")
+	.put(ControllerProdutos.update)
+
 export default produtosRoutes;
