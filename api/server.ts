@@ -1,6 +1,7 @@
 import express from "express";
 import * as dotenv from "dotenv";
 import dbConnect from "./dbConfig/dbConnect";
+import Produto from "./src/models/Produto";
 
 dotenv.config();
 
