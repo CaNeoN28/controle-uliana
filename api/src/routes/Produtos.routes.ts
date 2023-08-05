@@ -10,6 +10,7 @@ produtosRoutes
 
 produtosRoutes
 	.route("/produto/:id")
+	.get(ControllerProdutos.getOne)
 	.put(ControllerProdutos.update)
 	.delete(ControllerProdutos.delete)
 

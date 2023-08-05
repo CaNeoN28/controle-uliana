@@ -22,7 +22,17 @@ class ControllerProdutos {
 
 			res.send(produto);
 		} catch (error: any) {
-			res.send(error.message);
+			next(error);
+		}
+	};
+
+	static getOne: RequestHandler = async function (req, res, next) {
+		try {
+			const { id } = req.params;
+
+			res.send(id)
+		} catch (error) {
+			next(error);
 		}
 	};
 
@@ -43,9 +53,9 @@ class ControllerProdutos {
 		try {
 			const { id } = req.params;
 
-			await DeleteProduto(id)
+			await DeleteProduto(id);
 
-			res.status(204).send()
+			res.status(204).send();
 		} catch (error) {
 			next(error);
 		}
