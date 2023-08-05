@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const produtoSchema = new mongoose.Schema({
 	codigo: {
-		type: Number,
+		type: String,
 		required: true,
 		unique: true
 	},
