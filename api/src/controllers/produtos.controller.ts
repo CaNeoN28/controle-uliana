@@ -31,9 +31,9 @@ class ControllerProdutos {
 		try {
 			const { id } = req.params;
 
-			const produto = await FindProduto(id)
+			const produto = await FindProduto(id);
 
-			res.send(produto)
+			res.send(produto);
 		} catch (error) {
 			next(error);
 		}

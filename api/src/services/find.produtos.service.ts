@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
+import RepositoryProdutos from "../repositories/produtos.repository";
 
-export default function FindProduto(id: string) {
+export default async function FindProduto(id: string) {
 	if (!mongoose.isValidObjectId(id)) throw new Error("Id inválido");
 
-	return id
+	const produto = await RepositoryProdutos.find(id);
+
+	return produto;
 }

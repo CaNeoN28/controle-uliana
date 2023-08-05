@@ -17,10 +17,16 @@ class RepositoryProdutos {
 		return produto;
 	};
 
-	static update = async function (data: any, id: any) {
+	static find = async function (id: string) {
 		const produto = await Produto.findById(id);
 
 		if (!produto) throw new Error("Produto não encontrado");
+
+		return produto;
+	};
+
+	static update = async function (data: any, id: any) {
+		const produto = await RepositoryProdutos.find(id);
 
 		await produto.updateOne(data);
 
@@ -30,11 +36,9 @@ class RepositoryProdutos {
 	};
 
 	static remove = async function (id: string) {
-		const produto = await Produto.findById(id);
+		const produto = await RepositoryProdutos.find(id)
 
-		if (!produto) throw new Error("Produto não encontrado");
-
-		await produto.deleteOne()
+		await produto.deleteOne();
 	};
 }
 
