@@ -11,5 +11,6 @@ produtosRoutes
 produtosRoutes
 	.route("/produto/:id")
 	.put(ControllerProdutos.update)
+	.delete(ControllerProdutos.delete)
 
 export default produtosRoutes;

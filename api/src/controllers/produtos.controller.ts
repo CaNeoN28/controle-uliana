@@ -30,9 +30,19 @@ class ControllerProdutos {
 			const { id } = req.params;
 			const data = req.body;
 
-			const produto = await UpdateProduto(data, id)
+			const produto = await UpdateProduto(data, id);
 
-			res.send(produto)
+			res.send(produto);
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	static delete: RequestHandler = async function (req, res, next) {
+		try {
+			const { id } = req.params;
+
+			res.send(id);
 		} catch (error) {
 			next(error);
 		}
