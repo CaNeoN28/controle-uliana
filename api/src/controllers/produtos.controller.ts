@@ -43,8 +43,9 @@ class ControllerProdutos {
 		try {
 			const { id } = req.params;
 
-			const resultado = await DeleteProduto(id);
-			res.send(resultado);
+			await DeleteProduto(id)
+
+			res.status(204).send()
 		} catch (error) {
 			next(error);
 		}

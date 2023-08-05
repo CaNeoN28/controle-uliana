@@ -28,6 +28,14 @@ class RepositoryProdutos {
 
 		return newProduto;
 	};
+
+	static remove = async function (id: string) {
+		const produto = await Produto.findById(id);
+
+		if (!produto) throw new Error("Produto não encontrado");
+
+		await produto.deleteOne()
+	};
 }
 
 export default RepositoryProdutos;
