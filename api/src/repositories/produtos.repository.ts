@@ -1,8 +1,18 @@
 import Produto from "../models/Produto";
+import FiltrosProdutos from "../types/FiltrosProdutos";
 
 class RepositoryProdutos {
-	static list = async function () {
-		const produtos = await Produto.find();
+	static list = async function ({nome, codigo}: FiltrosProdutos) {
+
+		const filtros: any = {}
+
+		if(nome)
+			filtros.nome = new RegExp(nome, 'i')
+
+		if(codigo)
+			filtros.codigo = new RegExp(codigo, 'i')
+
+		const produtos = await Produto.find(filtros);
 
 		if(produtos.length === 1)
 			return produtos[0]

@@ -7,8 +7,13 @@ import FindProduto from "../services/find.produtos.service";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
+		const {nome, codigo} = {
+			nome: req.query.nome as string || undefined,
+			codigo: req.query.codigo as string || undefined
+		}
+
 		try {
-			const produtos = await listProdutos();
+			const produtos = await listProdutos({nome, codigo});
 
 			res.send(produtos);
 		} catch (error) {
