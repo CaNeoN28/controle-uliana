@@ -4,6 +4,9 @@ class RepositoryProdutos {
 	static list = async function () {
 		const produtos = await Produto.find();
 
+		if(produtos.length === 1)
+			return produtos[0]
+
 		return produtos;
 	};
 
