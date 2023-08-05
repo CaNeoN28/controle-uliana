@@ -2,7 +2,8 @@ import { RequestHandler } from "express";
 import listProdutos from "../services/list.produtos.service";
 import CreateProdutos from "../services/create.produtos.service";
 import UpdateProduto from "../services/update.produto.service";
-import DeleteProduto from "../services/delete.produto";
+import DeleteProduto from "../services/delete.produto.service";
+import FindProduto from "../services/find.produtos.service";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
@@ -30,7 +31,9 @@ class ControllerProdutos {
 		try {
 			const { id } = req.params;
 
-			res.send(id)
+			const produto = await FindProduto(id)
+
+			res.send(produto)
 		} catch (error) {
 			next(error);
 		}
