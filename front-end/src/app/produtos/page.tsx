@@ -3,6 +3,7 @@
 import FetchProdutos from "@/fetch/produtos";
 import Produtos from "@/types/Produtos";
 import { useEffect, useState } from "react";
+import styles from "./produtos.module.css"
 
 export default function TelaProdutos() {
 	const fProdutos = new FetchProdutos();
@@ -21,15 +22,15 @@ export default function TelaProdutos() {
 
 	return (
 		<>
-			<ul>
+			<ul className={styles.produtos}>
 				{produtos.map((produto) => (
-					<li>
-						<div>
+					<li className={styles.produto}>
+						<div className={styles.info_group}>
 							<span>{produto.codigo}</span>
 							<span>{produto.nome}</span>
 						</div>
-						<div>
-							<span>{produto.preco}</span>
+						<div className={styles.info_group}>
+							<span>R$ {produto.preco}</span>
 							<span>{produto.tipo_unidade}</span>
 						</div>
 					</li>

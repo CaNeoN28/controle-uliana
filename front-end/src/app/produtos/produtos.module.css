@@ -1,0 +1,15 @@
+.produtos{
+	display: flex;
+	flex-direction: column;
+}
+
+.produto{
+	display: inline-flex;
+	align-items: center;
+	flex-direction: column;
+}
+
+.info_group{
+	display: flex;
+	gap: 8px;
+}
