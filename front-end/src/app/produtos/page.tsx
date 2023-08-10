@@ -56,6 +56,7 @@ export default function TelaProdutos() {
 						type="text"
 						{...register("codigo", {
 							required: true,
+							pattern: /^[0-9]*$/
 						})}
 					/>
 				</div>
@@ -78,12 +79,13 @@ export default function TelaProdutos() {
 						type="text"
 						{...register("preco", {
 							required: true,
+							pattern: /^[0-9]*$/
 						})}
 					/>
 				</div>
 
 				<div>
-					<label htmlFor="tipo_unidade">Tipo da unidade</label>
+					<label htmlFor="tipo_unidade">Tipo da unidade: </label>
 					<select
 						id="tipo_unidade"
 						{...register("tipo_unidade", {
