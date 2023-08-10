@@ -1,7 +1,7 @@
 "use client";
 
 import FetchProdutos from "@/fetch/produtos";
-import Produtos from "@/types/Produtos";
+import Produto from "@/types/Produtos";
 import { useEffect, useState } from "react";
 import styles from "./produtos.module.css";
 import { useForm } from "react-hook-form";
@@ -12,15 +12,23 @@ export default function TelaProdutos() {
 		register,
 		control,
 		formState: { errors },
-	} = useForm();
+	} = useForm<Produto>();
 	const fProdutos = new FetchProdutos();
 
-	const [produtos, setProdutos] = useState<Produtos[]>([]);
+	const [produtos, setProdutos] = useState<Produto[]>([]);
 
 	const getProdutos = async () => {
 		const produtos = await fProdutos.getProdutos();
 
 		setProdutos(produtos);
+	};
+
+	const onSubmit = async (data: Produto) => {
+		const response = await fProdutos.saveProduto(data);
+
+		console.log(response)
+
+		getProdutos()
 	};
 
 	useEffect(() => {
@@ -45,9 +53,7 @@ export default function TelaProdutos() {
 			</ul>
 
 			<form
-				onSubmit={handleSubmit((data) => {
-					console.log(data);
-				})}
+				onSubmit={handleSubmit(onSubmit)}
 			>
 				<div>
 					<label htmlFor="codigo">Código: </label>
@@ -56,7 +62,7 @@ export default function TelaProdutos() {
 						type="text"
 						{...register("codigo", {
 							required: true,
-							pattern: /^[0-9]*$/
+							pattern: /^[0-9]*$/,
 						})}
 					/>
 				</div>
@@ -79,7 +85,9 @@ export default function TelaProdutos() {
 						type="text"
 						{...register("preco", {
 							required: true,
-							pattern: /^[0-9]*$/
+							validate: (value) => {
+								return !isNaN(Number(value))
+							}
 						})}
 					/>
 				</div>
