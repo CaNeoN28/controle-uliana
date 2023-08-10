@@ -50,7 +50,7 @@ export default function TelaProdutos() {
 				})}
 			>
 				<div>
-					<label htmlFor="codigo">Código</label>
+					<label htmlFor="codigo">Código: </label>
 					<input
 						id="codigo"
 						type="text"
@@ -58,6 +58,41 @@ export default function TelaProdutos() {
 							required: true,
 						})}
 					/>
+				</div>
+
+				<div>
+					<label htmlFor="nome">Nome do produto: </label>
+					<input
+						id="nome"
+						type="text"
+						{...register("nome", {
+							required: true,
+						})}
+					/>
+				</div>
+
+				<div>
+					<label htmlFor="preco">Preço: </label>
+					<input
+						id="preco"
+						type="text"
+						{...register("preco", {
+							required: true,
+						})}
+					/>
+				</div>
+
+				<div>
+					<label htmlFor="tipo_unidade">Tipo da unidade</label>
+					<select
+						id="tipo_unidade"
+						{...register("tipo_unidade", {
+							required: true,
+						})}
+					>
+						<option value={"kg"}>Quilograma</option>
+						<option value={"un"}>Unidade</option>
+					</select>
 				</div>
 
 				<button>SALVAR</button>
