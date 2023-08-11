@@ -16,6 +16,8 @@ export default function TelaProdutos() {
 	const fProdutos = new FetchProdutos();
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
+	
+	const [creationError, setCreationError] = useState("")
 
 	const getProdutos = async () => {
 		const produtos = await fProdutos.getProdutos();
@@ -24,9 +26,13 @@ export default function TelaProdutos() {
 	};
 
 	const onSubmit = async (data: Produto) => {
-		const response = await fProdutos.saveProduto(data);
+		try{
+			await fProdutos.saveProduto(data);
 
-		console.log(response)
+		} catch(err) {
+			console.log(err)
+			setCreationError("Não foi possivel salvar o produto")
+		}
 
 		getProdutos()
 	};
@@ -120,6 +126,12 @@ export default function TelaProdutos() {
 				</div>
 
 				<button>SALVAR</button>
+
+				{creationError && (
+					<div>
+						{creationError}
+					</div>
+				)}
 			</form>
 		</>
 	);
