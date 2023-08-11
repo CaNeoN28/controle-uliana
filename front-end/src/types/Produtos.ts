@@ -5,3 +5,5 @@ export default interface Produto {
 	tipo_unidade: "kg" | "un";
 	preco: number;
 }
+
+export const isProduto = (x: any): x is Produto => true

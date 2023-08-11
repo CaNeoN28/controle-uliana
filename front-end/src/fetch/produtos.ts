@@ -3,8 +3,10 @@ import { API_URL } from "@/variables";
 import axios from "axios";
 
 export default class FetchProdutos {
-	async getProdutos() {
-		const produtos = (await axios.get(`${API_URL}/produtos`)).data as Produto[];
+	async getProdutos(filtros: any) {
+		const produtos = (await axios.get(`${API_URL}/produtos`, {
+			params: filtros
+		})).data as Produto[] | Produto;
 
 		return produtos;
 	}

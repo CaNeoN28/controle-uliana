@@ -1,7 +1,7 @@
 "use client";
 
 import FetchProdutos from "@/fetch/produtos";
-import Produto from "@/types/Produtos";
+import Produto, { isProduto } from "@/types/Produtos";
 import { useEffect, useState } from "react";
 import styles from "./produtos.module.css";
 import { useForm } from "react-hook-form";
@@ -17,15 +17,22 @@ export default function TelaProdutos() {
 	const fProdutos = new FetchProdutos();
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
+	const [filtros, setFiltros] = useState({
+		nome: "",
+		codigo: "",
+	});
 
 	const [creationError, setCreationError] = useState("");
 
 	const [idParaAlterar, setIdParaAlterar] = useState("");
 
 	const getProdutos = async () => {
-		const produtos = await fProdutos.getProdutos();
+		const produtos = await fProdutos.getProdutos(filtros);
 
-		setProdutos(produtos);
+		if(Array.isArray(produtos))
+			setProdutos(produtos)
+		else
+			setProdutos([produtos])
 	};
 
 	const onSubmit = async (data: Produto) => {
@@ -66,10 +73,31 @@ export default function TelaProdutos() {
 
 	useEffect(() => {
 		getProdutos();
-	}, []);
+	}, [filtros]);
 
 	return (
 		<>
+			<div>
+				<div>
+					<label htmlFor="codigo_filtro">Código: </label>
+					<input
+						id="codigo_filtro"
+						type="text"
+						value={filtros.codigo}
+						onChange={(e) => setFiltros({ ...filtros, codigo: e.target.value })}
+					/>
+				</div>
+
+				<div>
+					<label htmlFor="nome_filtro">Nome do Produto: </label>
+					<input
+						id="nome_filtro"
+						type="text"
+						value={filtros.nome}
+						onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
+					/>
+				</div>
+			</div>
 			<ul className={styles.produtos}>
 				{produtos.map((produto, index) => (
 					<li className={styles.produto} key={index}>
