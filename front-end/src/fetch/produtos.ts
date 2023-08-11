@@ -20,6 +20,17 @@ export default class FetchProdutos {
 		return response;
 	}
 
+	async updateProduto(id: string, data: Produto) {
+		const response = await axios
+			.put(`${API_URL}/produto/${id}`, data)
+			.then((res) => res)
+			.catch((err) => {
+				throw err;
+			});
+
+		return response;
+	}
+
 	async deleteProduto(id: string) {
 		await axios
 			.delete(`${API_URL}/produto/${id}`)

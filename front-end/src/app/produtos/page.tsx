@@ -10,14 +10,17 @@ export default function TelaProdutos() {
 	const {
 		handleSubmit,
 		register,
-		control,
+		reset,
+		setValue,
 		formState: { errors },
 	} = useForm<Produto>();
 	const fProdutos = new FetchProdutos();
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
-	
-	const [creationError, setCreationError] = useState("")
+
+	const [creationError, setCreationError] = useState("");
+
+	const [idParaAlterar, setIdParaAlterar] = useState("");
 
 	const getProdutos = async () => {
 		const produtos = await fProdutos.getProdutos();
@@ -26,26 +29,40 @@ export default function TelaProdutos() {
 	};
 
 	const onSubmit = async (data: Produto) => {
-		try{
-			await fProdutos.saveProduto(data);
-
-		} catch(err) {
-			console.log(err)
-			setCreationError("Não foi possivel salvar o produto")
+		try {
+			if (idParaAlterar) {
+				await fProdutos.updateProduto(idParaAlterar, data);
+				setIdParaAlterar("");
+			} else {
+				await fProdutos.saveProduto(data);
+			}
+		} catch (err) {
+			console.log(err);
+			setCreationError("Não foi possivel salvar o produto");
 		}
 
-		getProdutos()
+		reset();
+		getProdutos();
+	};
+
+	const onUpdate = (id: string, data: Produto) => {
+		setIdParaAlterar(id);
+
+		setValue("nome", data.nome);
+		setValue("codigo", data.codigo);
+		setValue("preco", data.preco);
+		setValue("tipo_unidade", data.tipo_unidade);
 	};
 
 	const onDelete = async (id: string) => {
 		try {
-			await fProdutos.deleteProduto(id)
-		} catch(error) {
-			console.log(error)
+			await fProdutos.deleteProduto(id);
+		} catch (error) {
+			console.log(error);
 		}
 
-		getProdutos()
-	}
+		getProdutos();
+	};
 
 	useEffect(() => {
 		getProdutos();
@@ -64,17 +81,29 @@ export default function TelaProdutos() {
 							<span>R$ {produto.preco}</span>
 							<span>{produto.tipo_unidade}</span>
 						</div>
-						<button onClick={(e) => {
-							e.preventDefault()
-							onDelete(produto._id)
-						}}>EXCLUIR</button>
+						<div>
+							<button
+								onClick={(e) => {
+									e.preventDefault();
+									onUpdate(produto._id, produto);
+								}}
+							>
+								ATUALIZAR
+							</button>
+							<button
+								onClick={(e) => {
+									e.preventDefault();
+									onDelete(produto._id);
+								}}
+							>
+								EXCLUIR
+							</button>
+						</div>
 					</li>
 				))}
 			</ul>
 
-			<form
-				onSubmit={handleSubmit(onSubmit)}
-			>
+			<form onSubmit={handleSubmit(onSubmit)}>
 				<div>
 					<label htmlFor="codigo">Código: </label>
 					<input
@@ -106,8 +135,8 @@ export default function TelaProdutos() {
 						{...register("preco", {
 							required: true,
 							validate: (value) => {
-								return !isNaN(Number(value))
-							}
+								return !isNaN(Number(value));
+							},
 						})}
 					/>
 				</div>
@@ -127,11 +156,7 @@ export default function TelaProdutos() {
 
 				<button>SALVAR</button>
 
-				{creationError && (
-					<div>
-						{creationError}
-					</div>
-				)}
+				{creationError && <div>{creationError}</div>}
 			</form>
 		</>
 	);
