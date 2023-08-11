@@ -31,6 +31,16 @@ export default function TelaProdutos() {
 		getProdutos()
 	};
 
+	const onDelete = async (id: string) => {
+		try {
+			await fProdutos.deleteProduto(id)
+		} catch(error) {
+			console.log(error)
+		}
+
+		getProdutos()
+	}
+
 	useEffect(() => {
 		getProdutos();
 	}, []);
@@ -48,6 +58,10 @@ export default function TelaProdutos() {
 							<span>R$ {produto.preco}</span>
 							<span>{produto.tipo_unidade}</span>
 						</div>
+						<button onClick={(e) => {
+							e.preventDefault()
+							onDelete(produto._id)
+						}}>EXCLUIR</button>
 					</li>
 				))}
 			</ul>

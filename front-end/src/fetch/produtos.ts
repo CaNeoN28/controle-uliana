@@ -17,6 +17,15 @@ export default class FetchProdutos {
 				throw err;
 			});
 
-		return response
+		return response;
+	}
+
+	async deleteProduto(id: string) {
+		await axios
+			.delete(`${API_URL}/produto/${id}`)
+			.then(() => {})
+			.catch((err) => {
+				throw err;
+			});
 	}
 }
