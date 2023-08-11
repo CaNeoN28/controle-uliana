@@ -54,8 +54,8 @@ export default function TelaProdutos() {
 	return (
 		<>
 			<ul className={styles.produtos}>
-				{produtos.map((produto) => (
-					<li className={styles.produto}>
+				{produtos.map((produto, index) => (
+					<li className={styles.produto} key={index}>
 						<div className={styles.info_group}>
 							<span>{produto.codigo}</span>
 							<span>{produto.nome}</span>
