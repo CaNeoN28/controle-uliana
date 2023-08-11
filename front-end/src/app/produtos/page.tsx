@@ -78,7 +78,12 @@ export default function TelaProdutos() {
 							<span>{produto.nome}</span>
 						</div>
 						<div className={styles.info_group}>
-							<span>R$ {produto.preco}</span>
+							<span>
+								{new Intl.NumberFormat("pt-BR", {
+									currency: "BRL",
+									style: "currency",
+								}).format(produto.preco)}
+							</span>
 							<span>{produto.tipo_unidade}</span>
 						</div>
 						<div>
