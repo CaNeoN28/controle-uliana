@@ -2,18 +2,27 @@
 
 import FetchProdutos from "@/fetch/produtos";
 import Produto, { isProduto } from "@/types/Produtos";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./produtos.module.css";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import TextInput from "@/components/TextInput";
 
 export default function TelaProdutos() {
 	const {
 		handleSubmit,
 		register,
 		reset,
+		control,
 		setValue,
 		formState: { errors },
-	} = useForm<Produto>();
+	} = useForm<Produto>({
+		defaultValues: {
+			codigo: "",
+			nome: "",
+			preco: 0,
+			tipo_unidade: "kg"
+		}
+	});
 	const fProdutos = new FetchProdutos();
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
@@ -29,10 +38,8 @@ export default function TelaProdutos() {
 	const getProdutos = async () => {
 		const produtos = await fProdutos.getProdutos(filtros);
 
-		if(Array.isArray(produtos))
-			setProdutos(produtos)
-		else
-			setProdutos([produtos])
+		if (Array.isArray(produtos)) setProdutos(produtos);
+		else setProdutos([produtos]);
 	};
 
 	const onSubmit = async (data: Produto) => {
@@ -78,26 +85,23 @@ export default function TelaProdutos() {
 	return (
 		<>
 			<div>
-				<div>
-					<label htmlFor="codigo_filtro">Código: </label>
-					<input
-						id="codigo_filtro"
-						type="text"
-						value={filtros.codigo}
-						onChange={(e) => setFiltros({ ...filtros, codigo: e.target.value })}
-					/>
-				</div>
-
-				<div>
-					<label htmlFor="nome_filtro">Nome do Produto: </label>
-					<input
-						id="nome_filtro"
-						type="text"
-						value={filtros.nome}
-						onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
-					/>
-				</div>
+				<TextInput
+					label="Codigo: "
+					id="codigo_filtro"
+					value={filtros.codigo}
+					onChange={(e: ChangeEvent<HTMLInputElement>) =>
+						setFiltros({ ...filtros, codigo: e.target.value })
+					}
+				/>
+				<TextInput
+					label="Nome do Produto: "
+					id="nome_filtro"
+					type="text"
+					value={filtros.nome}
+					onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
+				/>
 			</div>
+
 			<ul className={styles.produtos}>
 				{produtos.map((produto, index) => (
 					<li className={styles.produto} key={index}>
@@ -137,42 +141,53 @@ export default function TelaProdutos() {
 			</ul>
 
 			<form onSubmit={handleSubmit(onSubmit)}>
-				<div>
-					<label htmlFor="codigo">Código: </label>
-					<input
-						id="codigo"
-						type="text"
-						{...register("codigo", {
-							required: true,
-							pattern: /^[0-9]*$/,
-						})}
-					/>
-				</div>
+				<Controller
+					render={({ field }) => {
+						return (
+							<TextInput
+								{...{ ...field, ref: undefined }}
+								id="codigo"
+								label="Código: "
+								innerref={field.ref}
+								type="text"
+							/>
+						);
+					}}
+					name="codigo"
+					control={control}
+				/>
 
-				<div>
-					<label htmlFor="nome">Nome do produto: </label>
-					<input
-						id="nome"
-						type="text"
-						{...register("nome", {
-							required: true,
-						})}
-					/>
-				</div>
+				<Controller
+					render={({ field }) => {
+						return (
+							<TextInput
+								{...{ ...field, ref: undefined }}
+								id="nome"
+								label="Nome do Produto: "
+								innerref={field.ref}
+								type="text"
+							/>
+						);
+					}}
+					name="nome"
+					control={control}
+				/>
 
-				<div>
-					<label htmlFor="preco">Preço: </label>
-					<input
-						id="preco"
-						type="text"
-						{...register("preco", {
-							required: true,
-							validate: (value) => {
-								return !isNaN(Number(value));
-							},
-						})}
-					/>
-				</div>
+				<Controller
+					render={({ field }) => {
+						return (
+							<TextInput
+								{...{ ...field, ref: undefined }}
+								id="preco"
+								label="Preço: "
+								innerref={field.ref}
+								type="text"
+							/>
+						);
+					}}
+					name="preco"
+					control={control}
+				/>
 
 				<div>
 					<label htmlFor="tipo_unidade">Tipo da unidade: </label>
