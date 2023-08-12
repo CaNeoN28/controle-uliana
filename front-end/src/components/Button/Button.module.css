@@ -4,25 +4,25 @@
 	min-width: 120px;
 	height: 40px;
 
-	border: 1px solid #016101;
-	color: #004600;
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
 
 	border-radius: 4px;
 }
 
 .primario{
-	background-color: #016101;
-	color: white;
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
 }
 
 .primario:hover{
-	background-color: #004600;
+	background-color: var(--primary-dark-color);
 }
 
 .secundario{
-	background-color: white;
+	background-color: var(--secondary-color);
 }
 
 .secundario:hover{
-	background-color: #F0F0F0;
+	background-color: var(--secondary-dark-color);
 }

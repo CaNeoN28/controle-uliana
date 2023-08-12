@@ -1,8 +1,5 @@
 "use client";
 
-import FetchProdutos from "@/fetch/produtos";
-import { useEffect } from "react";
-
 export default function Home() {
 	return (
 		<>
