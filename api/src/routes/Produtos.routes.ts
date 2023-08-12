@@ -12,6 +12,8 @@ produtosRoutes
 	.route("/produto/:id")
 	.get(ControllerProdutos.getOne)
 	.put(ControllerProdutos.update)
-	.delete(ControllerProdutos.delete)
+	.delete(ControllerProdutos.delete);
+
+produtosRoutes.route("/produto").get(ControllerProdutos.getByCode);
 
 export default produtosRoutes;
