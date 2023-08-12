@@ -7,6 +7,7 @@ import styles from "./produtos.module.css";
 import { Controller, useForm } from "react-hook-form";
 import TextInput from "@/components/TextInput";
 import Form from "@/components/Form";
+import Button from "@/components/Button";
 
 export default function TelaProdutos() {
 	const {
@@ -21,8 +22,8 @@ export default function TelaProdutos() {
 			codigo: "",
 			nome: "",
 			preco: 0,
-			tipo_unidade: "kg"
-		}
+			tipo_unidade: "kg",
+		},
 	});
 	const fProdutos = new FetchProdutos();
 
@@ -120,22 +121,20 @@ export default function TelaProdutos() {
 							<span>{produto.tipo_unidade}</span>
 						</div>
 						<div>
-							<button
+							<Button
+								text="ATUALIZAR"
 								onClick={(e) => {
 									e.preventDefault();
 									onUpdate(produto._id, produto);
 								}}
-							>
-								ATUALIZAR
-							</button>
-							<button
+							/>
+							<Button
+								text="DELETAR"
 								onClick={(e) => {
 									e.preventDefault();
 									onDelete(produto._id);
 								}}
-							>
-								EXCLUIR
-							</button>
+							/>
 						</div>
 					</li>
 				))}
@@ -203,7 +202,7 @@ export default function TelaProdutos() {
 					</select>
 				</div>
 
-				<button>SALVAR</button>
+				<Button text="SALVAR" />
 
 				{creationError && <div>{creationError}</div>}
 			</Form>
