@@ -18,7 +18,7 @@ class RepositoryProdutos {
 		const totalDocuments = await Produto.countDocuments(filtros);
 		const totalPages = Math.ceil(totalDocuments / limit);
 
-		const produtos = await Produto.find(filtros).skip(limit * (page - 1));
+		const produtos = await Produto.find(filtros).sort({codigo: 1}).skip(limit * (page - 1));
 
 		return {
 			produtos,
