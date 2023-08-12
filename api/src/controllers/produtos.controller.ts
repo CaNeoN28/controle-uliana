@@ -5,29 +5,34 @@ import UpdateProduto from "../services/update.produto.service";
 import DeleteProduto from "../services/delete.produto.service";
 import FindProduto from "../services/find.produtos.service";
 import { PaginationOptions } from "../types/Paginate";
+import FindProdutoByCode from "../services/findByCode.produtos.service";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
-		const {nome, codigo} = {
-			nome: req.query.nome as string || undefined,
-			codigo: req.query.codigo as string || undefined
-		}
+		const { nome, codigo } = {
+			nome: (req.query.nome as string) || undefined,
+			codigo: (req.query.codigo as string) || undefined,
+		};
 
 		try {
-			const {page, limit} : PaginationOptions = {
+			const { page, limit }: PaginationOptions = {
 				page: Number(req.query.page) | 1,
-				limit: Number(req.query.limit) | 10
-			}
-			const options = {page, limit}
+				limit: Number(req.query.limit) | 10,
+			};
+			const options = { page, limit };
 
-			const {produtos, totalPages, totalDocuments} = await listProdutos({nome, codigo, options});
+			const { produtos, totalPages, totalDocuments } = await listProdutos({
+				nome,
+				codigo,
+				options,
+			});
 
 			res.send({
 				data: produtos,
 				page,
 				limit,
 				total_pages: totalPages,
-				total_documents: totalDocuments
+				total_documents: totalDocuments,
 			});
 		} catch (error) {
 			next(error);
@@ -50,6 +55,20 @@ class ControllerProdutos {
 			const { id } = req.params;
 
 			const produto = await FindProduto(id);
+
+			res.send(produto);
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	static getByCode: RequestHandler = async function (req, res, next) {
+		try {
+			const { codigo = "" } = {
+				codigo: req.query.codigo as string | undefined,
+			};
+
+			const produto = await FindProdutoByCode(codigo);
 
 			res.send(produto);
 		} catch (error) {

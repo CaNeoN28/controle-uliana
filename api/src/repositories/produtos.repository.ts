@@ -45,6 +45,14 @@ class RepositoryProdutos {
 		return produto;
 	};
 
+	static findByCode = async function (codigo: string) {
+		const produto = await Produto.findOne({codigo: new RegExp(codigo, 'i')})
+
+		if(!produto) throw new Error("Produto não encontrado")
+
+		return produto
+	};
+
 	static update = async function (data: any, id: any) {
 		const produto = await RepositoryProdutos.find(id);
 
