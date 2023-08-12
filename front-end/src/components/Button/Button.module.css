@@ -1,0 +1,28 @@
+.button{
+	padding: 8px 16px;
+
+	min-width: 120px;
+	height: 40px;
+
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+
+	border-radius: 4px;
+}
+
+.primario{
+	background-color: var(--primary-color);
+	color: var(--secondary-color);
+}
+
+.primario:hover{
+	background-color: var(--primary-dark-color);
+}
+
+.secundario{
+	background-color: var(--secondary-color);
+}
+
+.secundario:hover{
+	background-color: var(--secondary-dark-color);
+}

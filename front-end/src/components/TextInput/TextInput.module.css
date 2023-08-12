@@ -1,0 +1,14 @@
+.group{
+	display: inline-flex;
+	flex-direction: column;
+
+	gap: 4px;
+}
+
+.label{
+	padding: 0 8px;
+}
+
+.input {
+	padding: 8px;
+}

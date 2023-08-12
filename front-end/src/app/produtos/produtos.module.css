@@ -1,0 +1,68 @@
+.controle-produtos{
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+
+	gap: 24px;
+}
+
+.produtos{
+	display: flex;
+	flex-direction: column;
+
+	gap: 24px
+}
+
+.titulo{
+	text-align: center;
+	font-weight: normal;
+
+	margin-bottom: 16px;
+}
+
+.lista-produtos{
+	display: flex;
+	flex-direction: column;
+
+	gap: 16px;
+
+}
+
+.produto{
+	display: inline-flex;
+	flex-direction: column;
+	
+	font-size: 18px;
+	
+	gap: 8px;
+	border: 1px solid var(--primary-color);
+
+	padding: 16px;
+}
+
+.info{
+	display: flex;
+	flex-direction: row;
+
+	justify-content: space-between;
+}
+
+.info-group{
+	display: flex;
+	gap: 8px;
+}
+
+.button-group{
+	display: flex;
+	justify-content: end;
+
+	gap: 16px;
+}
+
+.cadastro {
+	display: flex;
+	flex-direction: column;
+
+	gap: 16px;
+}
