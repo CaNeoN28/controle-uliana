@@ -2,7 +2,7 @@ import classNames from "classnames";
 import { ComponentProps, MouseEventHandler } from "react";
 import styles from "./Button.module.css";
 
-import "../../styles/global.css"
+import "../../styles/variables.css"
 
 interface Props extends ComponentProps<"button"> {
 	text: string;
