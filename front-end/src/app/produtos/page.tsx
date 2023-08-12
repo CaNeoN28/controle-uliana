@@ -6,6 +6,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./produtos.module.css";
 import { Controller, useForm } from "react-hook-form";
 import TextInput from "@/components/TextInput";
+import Form from "@/components/Form";
 
 export default function TelaProdutos() {
 	const {
@@ -84,7 +85,7 @@ export default function TelaProdutos() {
 
 	return (
 		<>
-			<div>
+			<Form>
 				<TextInput
 					label="Codigo: "
 					id="codigo_filtro"
@@ -100,7 +101,7 @@ export default function TelaProdutos() {
 					value={filtros.nome}
 					onChange={(e) => setFiltros({ ...filtros, nome: e.target.value })}
 				/>
-			</div>
+			</Form>
 
 			<ul className={styles.produtos}>
 				{produtos.map((produto, index) => (
@@ -140,7 +141,7 @@ export default function TelaProdutos() {
 				))}
 			</ul>
 
-			<form onSubmit={handleSubmit(onSubmit)}>
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Controller
 					render={({ field }) => {
 						return (
@@ -205,7 +206,7 @@ export default function TelaProdutos() {
 				<button>SALVAR</button>
 
 				{creationError && <div>{creationError}</div>}
-			</form>
+			</Form>
 		</>
 	);
 }
