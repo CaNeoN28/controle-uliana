@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { RefCallBack } from "react-hook-form";
+import styles from "./TextInput.module.css";
 
 interface Props extends ComponentProps<"input"> {
 	label: string;
@@ -9,9 +10,9 @@ interface Props extends ComponentProps<"input"> {
 
 export default function TextInput({ label, id, innerref, ...props }: Props) {
 	return (
-		<div>
-			<label htmlFor={id}>{label}</label>
-			<input type="text" id={id} ref={innerref} {...props} />
+		<div className={styles.group}>
+			<label className={styles.label} htmlFor={id}>{label}</label>
+			<input className={styles.input} type="text" id={id} ref={innerref} {...props} />
 		</div>
 	);
 }
