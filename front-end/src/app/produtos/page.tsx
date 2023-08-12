@@ -54,8 +54,7 @@ export default function TelaProdutos() {
 	const getProdutos = async () => {
 		const produtos = await fProdutos.getProdutos(filtros);
 
-		if (Array.isArray(produtos)) setProdutos(produtos);
-		else setProdutos([produtos]);
+		setProdutos(produtos.data);
 	};
 
 	const onSubmit = async (data: Produto) => {

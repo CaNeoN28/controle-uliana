@@ -1,3 +1,4 @@
+import APIGetResponse from "@/types/APIGetResponse";
 import Produto from "@/types/Produtos";
 import { API_URL } from "@/variables";
 import axios from "axios";
@@ -6,7 +7,7 @@ export default class FetchProdutos {
 	async getProdutos(filtros: any) {
 		const produtos = (await axios.get(`${API_URL}/produtos`, {
 			params: filtros
-		})).data as Produto[] | Produto;
+		})).data as APIGetResponse;
 
 		return produtos;
 	}
