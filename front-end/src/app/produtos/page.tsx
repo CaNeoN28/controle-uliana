@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import TextInput from "@/components/TextInput";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
+import Select from "@/components/Select";
 
 export default function TelaProdutos() {
 	const {
@@ -26,6 +27,17 @@ export default function TelaProdutos() {
 		},
 	});
 	const fProdutos = new FetchProdutos();
+
+	const options_tipo__unidade = [
+		{
+			text: "Quilograma",
+			value: "kg",
+		},
+		{
+			text: "Unidade",
+			value: "un",
+		},
+	];
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
 	const [filtros, setFiltros] = useState({
@@ -190,18 +202,21 @@ export default function TelaProdutos() {
 					control={control}
 				/>
 
-				<div>
-					<label htmlFor="tipo_unidade">Tipo da unidade: </label>
-					<select
-						id="tipo_unidade"
-						{...register("tipo_unidade", {
-							required: true,
-						})}
-					>
-						<option value={"kg"}>Quilograma</option>
-						<option value={"un"}>Unidade</option>
-					</select>
-				</div>
+				<Controller
+					name="tipo_unidade"
+					control={control}
+					render={({ field }) => {
+						return (
+							<Select
+								{...{ ...field, ref: undefined }}
+								id="tipo_unidade"
+								label="Tipo de unidade: "
+								options={options_tipo__unidade}
+								innerref={field.ref}
+							/>
+						);
+					}}
+				/>
 
 				<Button text="SALVAR" />
 
