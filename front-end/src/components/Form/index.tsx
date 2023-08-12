@@ -1,4 +1,5 @@
 import { ComponentProps, FormEventHandler } from "react";
+import styles from "./Form.module.css"
 
 interface Props extends ComponentProps<"form"> {
 	onSubmit?: FormEventHandler<HTMLFormElement>;
@@ -7,7 +8,7 @@ interface Props extends ComponentProps<"form"> {
 
 export default function Form({ onSubmit, children, ...props }: Props) {
 	return (
-		<form onSubmit={onSubmit} {...props}>
+		<form className={styles.form} onSubmit={onSubmit} {...props}>
 			{...children}
 		</form>
 	);
