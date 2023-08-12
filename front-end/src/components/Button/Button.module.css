@@ -1,0 +1,28 @@
+.button{
+	padding: 8px 16px;
+
+	min-width: 120px;
+	max-height: 40px;
+
+	border: 1px solid #016101;
+	color: #004600;
+
+	border-radius: 4px;
+}
+
+.primario{
+	background-color: #016101;
+	color: white;
+}
+
+.primario:hover{
+	background-color: #004600;
+}
+
+.secundario{
+	background-color: white;
+}
+
+.secundario:hover{
+	background-color: #F0F0F0;
+}

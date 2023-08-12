@@ -122,17 +122,18 @@ export default function TelaProdutos() {
 						</div>
 						<div>
 							<Button
+								text="DELETAR"
+								secundario
+								onClick={(e) => {
+									e.preventDefault();
+									onDelete(produto._id);
+								}}
+							/>
+							<Button
 								text="ATUALIZAR"
 								onClick={(e) => {
 									e.preventDefault();
 									onUpdate(produto._id, produto);
-								}}
-							/>
-							<Button
-								text="DELETAR"
-								onClick={(e) => {
-									e.preventDefault();
-									onDelete(produto._id);
 								}}
 							/>
 						</div>
