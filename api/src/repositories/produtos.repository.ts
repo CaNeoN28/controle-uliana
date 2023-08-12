@@ -1,23 +1,30 @@
 import Produto from "../models/Produto";
 import FiltrosProdutos from "../types/FiltrosProdutos";
+import { PaginationOptions } from "../types/Paginate";
 
 class RepositoryProdutos {
-	static list = async function ({nome, codigo}: FiltrosProdutos) {
+	static list = async function ({
+		nome,
+		codigo,
+		options,
+	}: FiltrosProdutos & { options: PaginationOptions }) {
+		const filtros: any = {};
+		const { page, limit } = options;
 
-		const filtros: any = {}
+		if (nome) filtros.nome = new RegExp(nome, "i");
 
-		if(nome)
-			filtros.nome = new RegExp(nome, 'i')
+		if (codigo) filtros.codigo = new RegExp(codigo, "i");
 
-		if(codigo)
-			filtros.codigo = new RegExp(codigo, 'i')
+		const totalDocuments = await Produto.countDocuments(filtros);
+		const totalPages = Math.ceil(totalDocuments / limit);
 
-		const produtos = await Produto.find(filtros);
+		const produtos = await Produto.find(filtros).skip(limit * (page - 1));
 
-		if(produtos.length === 1)
-			return produtos[0]
-
-		return produtos;
+		return {
+			produtos,
+			totalPages,
+			totalDocuments,
+		};
 	};
 
 	static create = async function (data: any) {
@@ -49,7 +56,7 @@ class RepositoryProdutos {
 	};
 
 	static remove = async function (id: string) {
-		const produto = await RepositoryProdutos.find(id)
+		const produto = await RepositoryProdutos.find(id);
 
 		await produto.deleteOne();
 	};

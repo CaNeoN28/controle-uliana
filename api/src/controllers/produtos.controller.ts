@@ -4,6 +4,7 @@ import CreateProdutos from "../services/create.produtos.service";
 import UpdateProduto from "../services/update.produto.service";
 import DeleteProduto from "../services/delete.produto.service";
 import FindProduto from "../services/find.produtos.service";
+import { PaginationOptions } from "../types/Paginate";
 
 class ControllerProdutos {
 	static get: RequestHandler = async function (req, res, next) {
@@ -13,9 +14,21 @@ class ControllerProdutos {
 		}
 
 		try {
-			const produtos = await listProdutos({nome, codigo});
+			const {page, limit} : PaginationOptions = {
+				page: Number(req.query.page) | 1,
+				limit: Number(req.query.limit) | 10
+			}
+			const options = {page, limit}
 
-			res.send(produtos);
+			const {produtos, totalPages, totalDocuments} = await listProdutos({nome, codigo, options});
+
+			res.send({
+				data: produtos,
+				page,
+				limit,
+				total_pages: totalPages,
+				total_documents: totalDocuments
+			});
 		} catch (error) {
 			next(error);
 		}
