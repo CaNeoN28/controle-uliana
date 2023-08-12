@@ -1,5 +1,6 @@
 import { ComponentProps } from "react";
 import { RefCallBack } from "react-hook-form";
+import styles from "./Select.module.css"
 
 interface Props extends ComponentProps<"select"> {
 	id: string;
@@ -19,9 +20,9 @@ export default function Select({
 	...props
 }: Props) {
 	return (
-		<div>
+		<div className={styles.group}>
 			<label htmlFor={id}>{label}</label>
-			<select id={id} ref={innerref} {...props}>
+			<select className={styles.select} id={id} ref={innerref} {...props}>
 				{options.map((option, index) => (
 					<option key={index} value={option.value}>
 						{option.text}

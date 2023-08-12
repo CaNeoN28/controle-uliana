@@ -1,0 +1,10 @@
+.group{
+	display: flex;
+	flex-direction: column;
+
+	gap: 4px;
+}
+
+.select{
+	padding: 8px 16px;
+}
