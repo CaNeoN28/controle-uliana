@@ -160,6 +160,8 @@ export default function TelaProdutos() {
 				</ul>
 			</div>
 
+			<hr className={styles["line"]}/>
+
 			<div className={styles["cadastro"]}>
 				<h2 className={styles["titulo"]}>
 					Cadastro
@@ -205,7 +207,7 @@ export default function TelaProdutos() {
 									id="preco"
 									label="Preço: "
 									innerref={field.ref}
-									type="text"
+									type="number"
 								/>
 							);
 						}}
