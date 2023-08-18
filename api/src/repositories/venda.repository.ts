@@ -20,4 +20,23 @@ export default class VendaRepository {
 
 		return vendas;
 	};
+
+	static updateVenda = async function ({
+		id,
+		valor_pago,
+	}: {
+		id: string;
+		valor_pago: number;
+	}) {
+		const venda = await VendaModel.findById(id);
+
+		if (!venda) throw new Error("Venda não encontrada");
+
+		venda.valor_pago = valor_pago
+		venda.troco = Number((venda.valor_pago - venda.total!).toFixed(2))
+
+		await venda.save()
+
+		return venda
+	};
 }
