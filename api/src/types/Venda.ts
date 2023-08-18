@@ -7,5 +7,6 @@ export default interface Venda {
 	}],
 	total?: number,
 	valor_pago: number,
-	cliente: string
+	troco?: number,
+	cliente?: string
 }
