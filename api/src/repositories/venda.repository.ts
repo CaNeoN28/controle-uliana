@@ -8,8 +8,8 @@ export default class VendaRepository {
 		return venda
 	}
 
-	static listVendas = async function() {
-		const vendas = await VendaModel.find()
+	static listVendas = async function({cliente} : {cliente: string}) {
+		const vendas = await VendaModel.find({cliente: new RegExp(cliente, 'i')})
 
 		return vendas
 	}

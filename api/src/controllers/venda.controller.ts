@@ -22,7 +22,9 @@ export default class VendaController {
 
 	static get: RequestHandler = async function (req, res, next) {
 		try {
-			const vendas = await ListVendas()
+			const cliente = req.query.cliente as string || ""
+
+			const vendas = await ListVendas({cliente})
 
 			res.status(200).send(vendas)
 		} catch (error) {
