@@ -7,4 +7,10 @@ export default class VendaRepository {
 
 		return venda
 	}
+
+	static listVendas = async function() {
+		const vendas = await VendaModel.find()
+
+		return vendas
+	}
 }
