@@ -1,16 +1,23 @@
-import VendaModel from "../models/Venda"
-import Venda from "../types/Venda"
+import VendaModel from "../models/Venda";
+import FiltrosVenda from "../types/FiltrosVenda";
+import Venda from "../types/Venda";
 
 export default class VendaRepository {
-	static createVenda = async function(vendaData: Venda) {
-		const venda = await VendaModel.create(vendaData)
+	static createVenda = async function (vendaData: Venda) {
+		const venda = await VendaModel.create(vendaData);
 
-		return venda
-	}
+		return venda;
+	};
 
-	static listVendas = async function({cliente} : {cliente: string}) {
-		const vendas = await VendaModel.find({cliente: new RegExp(cliente, 'i')})
+	static listVendas = async function ({ cliente, divida }: FiltrosVenda) {
+		const filtros: { cliente?: RegExp; troco?: any } = {};
 
-		return vendas
-	}
+		if (cliente) filtros.cliente = new RegExp(cliente, "i");
+
+		if (divida) filtros.troco = { $lt: 0 };
+
+		const vendas = await VendaModel.find(filtros);
+
+		return vendas;
+	};
 }

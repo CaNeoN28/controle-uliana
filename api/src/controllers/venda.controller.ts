@@ -23,8 +23,9 @@ export default class VendaController {
 	static get: RequestHandler = async function (req, res, next) {
 		try {
 			const cliente = req.query.cliente as string || ""
+			const divida = req.query.divida
 
-			const vendas = await ListVendas({cliente})
+			const vendas = await ListVendas({cliente, divida})
 
 			res.status(200).send(vendas)
 		} catch (error) {
