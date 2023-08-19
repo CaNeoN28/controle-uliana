@@ -2,6 +2,17 @@
 	position: relative;
 }
 
+.cancel{
+	position: absolute;
+
+	color: var(--primary-color);
+
+	cursor: pointer;
+
+	right: 8px;
+	top: 30px
+}
+
 .produtos{
 	position: absolute;
 	z-index: 999;

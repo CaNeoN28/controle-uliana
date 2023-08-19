@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import Produto from "@/types/Produtos";
 import FetchProdutos from "@/fetch/produtos";
 import "../../styles/global.css";
+import { MdCancel } from "react-icons/md";
 
 export default function TelaVendas() {
 	const { handleSubmit, control, watch, reset, setValue } = useForm<Venda>({
@@ -21,6 +22,7 @@ export default function TelaVendas() {
 	const fProdutos = new FetchProdutos();
 
 	const [produtos, setProdutos] = useState<Produto[]>([]);
+	const [search, setSearch] = useState("")
 
 	const cadastrarVenda = (data: Venda) => {
 		console.log(data);
@@ -36,6 +38,11 @@ export default function TelaVendas() {
 
 		setProdutos(produtos);
 	};
+
+	const cancelSearch = () => {
+		setSearch("")
+		setProdutos([])
+	}
 
 	return (
 		<main>
@@ -57,10 +64,16 @@ export default function TelaVendas() {
 					<TextInput
 						id="produtos_venda"
 						label="Produto"
+						value={search}
 						onChange={(e) => {
+							setSearch(e.target.value)
 							findProdutos(e.target.value);
 						}}
 					/>
+
+					<a className={styles.cancel} onClick={() => cancelSearch()}>
+						<MdCancel />
+					</a>
 
 					{produtos.length > 0 && (
 						<div className={styles.produtos}>
