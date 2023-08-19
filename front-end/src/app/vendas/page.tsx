@@ -9,6 +9,7 @@ import TextInput from "@/components/TextInput";
 import Button from "@/components/Button";
 import Produto from "@/types/Produtos";
 import FetchProdutos from "@/fetch/produtos";
+import "../../styles/global.css";
 
 export default function TelaVendas() {
 	const { handleSubmit, control, watch, reset, setValue } = useForm<Venda>({
@@ -66,7 +67,16 @@ export default function TelaVendas() {
 							{produtos.map((produto, index) => {
 								return (
 									<div className={styles.produto} key={index}>
-										{produto.nome}
+										<span>
+											({produto.codigo}) {produto.nome}
+										</span>
+										<span>
+											{new Intl.NumberFormat("pt-BR", {
+												currency: "BRL",
+												style: "currency",
+											}).format(produto.preco)}{" "}
+											{produto.tipo_unidade}
+										</span>
 									</div>
 								);
 							})}

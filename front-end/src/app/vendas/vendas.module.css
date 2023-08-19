@@ -5,4 +5,23 @@
 .produtos{
 	position: absolute;
 	z-index: 999;
+
+	width: 100%;
+}
+
+.produto{
+	display: flex;
+	flex-direction: column;
+	
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+
+	padding: 16px;
+}
+
+.produto:hover{
+	color: var(--secondary-color);
+	background-color: var(--primary-color);
+
+	cursor: pointer;
 }
