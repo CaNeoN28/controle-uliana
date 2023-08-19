@@ -1,0 +1,8 @@
+.procurarProdutos{
+	position: relative;
+}
+
+.produtos{
+	position: absolute;
+	z-index: 999;
+}
