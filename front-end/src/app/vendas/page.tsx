@@ -21,7 +21,9 @@ export default function TelaVendas() {
 
 	const fProdutos = new FetchProdutos();
 
-	const [produtos, setProdutos] = useState<Produto[]>([]);
+	const [produtosPesquisa, setProdutosPesquisa] = useState<Produto[]>([]);
+
+	const [produto, setProduto] = useState<Produto>()
 	const [search, setSearch] = useState("")
 
 	const cadastrarVenda = (data: Venda) => {
@@ -36,12 +38,13 @@ export default function TelaVendas() {
 
 		const produtos = response.data;
 
-		setProdutos(produtos);
+		setProdutosPesquisa(produtos);
 	};
 
 	const cancelSearch = () => {
 		setSearch("")
-		setProdutos([])
+		setProduto(undefined)
+		setProdutosPesquisa([])
 	}
 
 	return (
@@ -63,6 +66,7 @@ export default function TelaVendas() {
 				<div className={styles.procurarProdutos}>
 					<TextInput
 						id="produtos_venda"
+						disabled = {Boolean(produto)}
 						label="Produto"
 						value={search}
 						onChange={(e) => {
@@ -75,11 +79,15 @@ export default function TelaVendas() {
 						<MdCancel />
 					</a>
 
-					{produtos.length > 0 && (
+					{produtosPesquisa.length > 0 && (
 						<div className={styles.produtos}>
-							{produtos.map((produto, index) => {
+							{produtosPesquisa.map((produto, index) => {
 								return (
-									<div className={styles.produto} key={index}>
+									<div className={styles.produto} key={index} onClick={() => {
+										setProduto(produto)
+										setSearch(produto.nome)
+										setProdutosPesquisa([])
+									}}>
 										<span>
 											({produto.codigo}) {produto.nome}
 										</span>
