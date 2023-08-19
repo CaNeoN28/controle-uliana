@@ -5,12 +5,13 @@ import styles from "./vendas.module.css";
 import Form from "@/components/Form";
 import { Controller, useForm } from "react-hook-form";
 import Venda from "@/types/Vendas";
-import TextInput from "@/components/TextInput";
+import TextInput from "@/components/Input";
 import Button from "@/components/Button";
 import Produto from "@/types/Produtos";
 import FetchProdutos from "@/fetch/produtos";
-import "../../styles/global.css";
+import "../../styles/variables.css";
 import { MdCancel } from "react-icons/md";
+import Input from "@/components/Input";
 
 export default function TelaVendas() {
 	const { handleSubmit, control, watch, reset, setValue } = useForm<Venda>({
@@ -23,12 +24,9 @@ export default function TelaVendas() {
 
 	const [produtosPesquisa, setProdutosPesquisa] = useState<Produto[]>([]);
 
-	const [produto, setProduto] = useState<Produto>()
-	const [search, setSearch] = useState("")
-
-	const cadastrarVenda = (data: Venda) => {
-		console.log(data);
-	};
+	const [produto, setProduto] = useState<Produto>();
+	const [quantidade, setQuantidade] = useState<number>();
+	const [search, setSearch] = useState("");
 
 	const findProdutos = async (produto: string) => {
 		let response = await fProdutos.getProdutos({ nome: produto });
@@ -42,35 +40,22 @@ export default function TelaVendas() {
 	};
 
 	const cancelSearch = () => {
-		setSearch("")
-		setProduto(undefined)
-		setProdutosPesquisa([])
-	}
+		setSearch("");
+		setProduto(undefined);
+		setProdutosPesquisa([]);
+	};
 
 	return (
 		<main>
-			<Form onSubmit={handleSubmit(cadastrarVenda)}>
-				<Controller
-					name="cliente"
-					control={control}
-					render={({ field }) => (
-						<TextInput
-							{...{ ...field, ref: undefined }}
-							id="cliente_venda"
-							label="Cliente: "
-							innerref={field.ref}
-						/>
-					)}
-				/>
-
+			<Form>
 				<div className={styles.procurarProdutos}>
 					<TextInput
 						id="produtos_venda"
-						disabled = {Boolean(produto)}
+						disabled={Boolean(produto)}
 						label="Produto"
 						value={search}
 						onChange={(e) => {
-							setSearch(e.target.value)
+							setSearch(e.target.value);
 							findProdutos(e.target.value);
 						}}
 					/>
@@ -83,11 +68,15 @@ export default function TelaVendas() {
 						<div className={styles.produtos}>
 							{produtosPesquisa.map((produto, index) => {
 								return (
-									<div className={styles.produto} key={index} onClick={() => {
-										setProduto(produto)
-										setSearch(produto.nome)
-										setProdutosPesquisa([])
-									}}>
+									<div
+										className={styles.produto}
+										key={index}
+										onClick={() => {
+											setProduto(produto);
+											setSearch(produto.nome);
+											setProdutosPesquisa([]);
+										}}
+									>
 										<span>
 											({produto.codigo}) {produto.nome}
 										</span>
@@ -104,8 +93,18 @@ export default function TelaVendas() {
 						</div>
 					)}
 				</div>
-
-				<Button text="Cadastrar venda" type="submit" />
+				<div>
+					<Input
+						disabled={!produto}
+						id="quantidade_produto"
+						label="Quantidade:"
+						type="number"
+						value={quantidade || ""}
+						onChange={(e) => {
+							setQuantidade(Number(e.target.value));
+						}}
+					/>
+				</div>
 			</Form>
 		</main>
 	);
