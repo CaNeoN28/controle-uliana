@@ -12,6 +12,7 @@ import FetchProdutos from "@/fetch/produtos";
 import "../../styles/variables.css";
 import { MdCancel } from "react-icons/md";
 import Input from "@/components/Input";
+import { numberToBRL } from "@/utils/currency";
 
 export default function TelaVendas() {
 	const { handleSubmit, control, watch, reset, setValue } = useForm<Venda>({
@@ -23,6 +24,14 @@ export default function TelaVendas() {
 	const fProdutos = new FetchProdutos();
 
 	const [produtosPesquisa, setProdutosPesquisa] = useState<Produto[]>([]);
+	const [produtosVenda, setProdutosVenda] = useState<
+		{
+			produto: Produto;
+			quantidade: number;
+			valor: number;
+			total: number;
+		}[]
+	>([]);
 
 	const [produto, setProduto] = useState<Produto>();
 	const [quantidade, setQuantidade] = useState<number>();
@@ -72,7 +81,7 @@ export default function TelaVendas() {
 										className={styles.produto}
 										key={index}
 										onClick={(e) => {
-											e.preventDefault()
+											e.preventDefault();
 											setProduto(produto);
 											setSearch(produto.nome);
 											setProdutosPesquisa([]);
@@ -82,11 +91,7 @@ export default function TelaVendas() {
 											({produto.codigo}) {produto.nome}
 										</span>
 										<span>
-											{new Intl.NumberFormat("pt-BR", {
-												currency: "BRL",
-												style: "currency",
-											}).format(produto.preco)}{" "}
-											{produto.tipo_unidade}
+											{numberToBRL(produto.preco)}  {produto.tipo_unidade}
 										</span>
 									</button>
 								);
@@ -105,6 +110,40 @@ export default function TelaVendas() {
 							setQuantidade(Number(e.target.value));
 						}}
 					/>
+				</div>
+
+				<Button
+					disabled={!(produto && quantidade)}
+					text="Adicionar produto"
+					onClick={(e) => {
+						e.preventDefault();
+
+						if (produto && quantidade) {
+							setProdutosVenda([
+								...produtosVenda,
+								{
+									produto: produto,
+									quantidade: quantidade,
+									valor: produto.preco,
+									total: produto.preco * quantidade,
+								},
+							]);
+							cancelSearch();
+						}
+					}}
+				/>
+
+				<div>
+					{produtosVenda.length > 0 &&
+						produtosVenda.map((instancia, index) => {
+							return (
+								<div key={index}>
+									{instancia.produto.nome} {instancia.quantidade}{" "}
+									{numberToBRL(instancia.valor)}
+									{numberToBRL(instancia.total)}
+								</div>
+							);
+						})}
 				</div>
 			</Form>
 		</main>
