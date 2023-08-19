@@ -91,7 +91,7 @@ export default function TelaVendas() {
 											({produto.codigo}) {produto.nome}
 										</span>
 										<span>
-											{numberToBRL(produto.preco)}  {produto.tipo_unidade}
+											{numberToBRL(produto.preco)} {produto.tipo_unidade}
 										</span>
 									</button>
 								);
@@ -133,18 +133,32 @@ export default function TelaVendas() {
 					}}
 				/>
 
-				<div>
-					{produtosVenda.length > 0 &&
-						produtosVenda.map((instancia, index) => {
-							return (
-								<div key={index}>
-									{instancia.produto.nome} {instancia.quantidade}{" "}
-									{numberToBRL(instancia.valor)}
-									{numberToBRL(instancia.total)}
-								</div>
-							);
-						})}
-				</div>
+				{produtosVenda.length > 0 && (
+					<table className={styles.produtos_venda}>
+						<thead>
+							<tr>
+								<th>Codigo</th>
+								<th>Produto</th>
+								<th>Valor</th>
+								<th>Quantidade</th>
+								<th>Total</th>
+							</tr>
+						</thead>
+						<tbody>
+							{produtosVenda.map((instancia, index) => {
+								return (
+									<tr key={index}>
+										<td>{instancia.produto.codigo}</td>
+										<td>{instancia.produto.nome}</td>
+										<td>{numberToBRL(instancia.valor)}</td>
+										<td>{instancia.quantidade}</td>
+										<td>{numberToBRL(instancia.total)}</td>
+									</tr>
+								);
+							})}
+						</tbody>
+					</table>
+				)}
 			</Form>
 		</main>
 	);
