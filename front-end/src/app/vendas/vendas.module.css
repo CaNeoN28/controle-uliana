@@ -23,6 +23,8 @@
 .produto{
 	display: flex;
 	flex-direction: column;
+
+	width: 100%;
 	
 	border: 1px solid var(--primary-color);
 	color: var(--primary-color);

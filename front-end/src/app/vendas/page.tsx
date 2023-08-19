@@ -68,10 +68,11 @@ export default function TelaVendas() {
 						<div className={styles.produtos}>
 							{produtosPesquisa.map((produto, index) => {
 								return (
-									<div
+									<button
 										className={styles.produto}
 										key={index}
-										onClick={() => {
+										onClick={(e) => {
+											e.preventDefault()
 											setProduto(produto);
 											setSearch(produto.nome);
 											setProdutosPesquisa([]);
@@ -87,7 +88,7 @@ export default function TelaVendas() {
 											}).format(produto.preco)}{" "}
 											{produto.tipo_unidade}
 										</span>
-									</div>
+									</button>
 								);
 							})}
 						</div>
