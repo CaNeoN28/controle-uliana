@@ -174,6 +174,20 @@ export default function TelaVendas() {
 					})}
 				</tbody>
 			</table>
+
+			{produtosVenda.length > 0 && (
+				<div>
+					Total:{" "}
+					{numberToBRL(
+						produtosVenda.reduce((prev, curr) => {
+							return {
+								...prev,
+								total: prev.total + curr.total,
+							};
+						}).total
+					)}
+				</div>
+			)}
 		</main>
 	);
 }
