@@ -59,9 +59,10 @@ export default function TelaVendas() {
 
 	const adicionarProduto = () => {
 		if (produto && quantidade) {
-			const produtoJaAdicionado = produtosVenda.find(
-				(p) => produto.codigo == p.produto.codigo
-			);
+			const produtoJaAdicionado = produtosVenda.find((p) => {
+				console.log(p);
+				return produto.codigo == p.produto.codigo;
+			});
 
 			if (produtoJaAdicionado) {
 				produtoJaAdicionado.quantidade += quantidade;
@@ -109,18 +110,21 @@ export default function TelaVendas() {
 		}
 	};
 
-	useEffect(() => {
+	const getTotal = () => {
 		if (produtosVenda.length > 0) {
-			const total = produtosVenda.reduce((prev, curr) => {
-				return {
-					...prev,
-					total: (prev.total += curr.total),
-				};
-			}).total;
+			const soma = produtosVenda
+				.map((produto) => produto.total)
+				.reduce((prev, curr) => {
+					return prev + curr;
+				});
 
-			setTotal(total);
+			setTotal(soma)
 		}
-	}, [produtosVenda]);
+	};
+
+	useEffect(() => {
+		getTotal()
+	}, [produtosVenda])
 
 	return (
 		<main className={styles.vendas}>

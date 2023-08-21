@@ -98,3 +98,9 @@
 
 	gap: 16px;
 }
+
+@media screen and (max-width: 800px) {
+	.vendas{
+		flex-direction: column;
+	}
+}
