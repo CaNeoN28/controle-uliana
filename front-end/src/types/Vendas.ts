@@ -13,4 +13,7 @@ export default interface Venda {
 	total: number;
 	valor_pago: number;
 	troco: number;
+	data_venda: string;
+	data_atualizacao: string;
+	_id: string
 }
