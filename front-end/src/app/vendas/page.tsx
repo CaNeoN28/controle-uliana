@@ -150,44 +150,46 @@ export default function TelaVendas() {
 				/>
 			</Form>
 
-			<table className={styles.produtos_venda}>
-				<thead>
-					<tr>
-						<th>Codigo</th>
-						<th>Produto</th>
-						<th>Valor</th>
-						<th>Quantidade</th>
-						<th>Total</th>
-					</tr>
-				</thead>
-				<tbody>
-					{produtosVenda.map((instancia, index) => {
-						return (
-							<tr key={index}>
-								<td>{instancia.produto.codigo}</td>
-								<td>{instancia.produto.nome}</td>
-								<td>{numberToBRL(instancia.valor)}</td>
-								<td>{instancia.quantidade}</td>
-								<td>{numberToBRL(instancia.total)}</td>
-							</tr>
-						);
-					})}
-				</tbody>
-			</table>
+			<div className={styles.venda}>
+				<table className={styles.produtos_venda}>
+					<thead>
+						<tr>
+							<th>Codigo</th>
+							<th>Produto</th>
+							<th>Valor</th>
+							<th>Quantidade</th>
+							<th>Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						{produtosVenda.map((instancia, index) => {
+							return (
+								<tr key={index}>
+									<td>{instancia.produto.codigo}</td>
+									<td>{instancia.produto.nome}</td>
+									<td>{numberToBRL(instancia.valor)}</td>
+									<td>{instancia.quantidade}</td>
+									<td>{numberToBRL(instancia.total)}</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
 
-			{produtosVenda.length > 0 && (
-				<div>
-					Total:{" "}
-					{numberToBRL(
-						produtosVenda.reduce((prev, curr) => {
-							return {
-								...prev,
-								total: prev.total + curr.total,
-							};
-						}).total
-					)}
-				</div>
-			)}
+				{produtosVenda.length > 0 && (
+					<div>
+						Total:{" "}
+						{numberToBRL(
+							produtosVenda.reduce((prev, curr) => {
+								return {
+									...prev,
+									total: prev.total + curr.total,
+								};
+							}).total
+						)}
+					</div>
+				)}
+			</div>
 		</main>
 	);
 }

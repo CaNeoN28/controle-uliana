@@ -56,6 +56,15 @@
 	cursor: pointer;
 }
 
+.venda{
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+
+	gap: 16px;
+}
+
 .produtos_venda {
 	border: 1px solid var(--primary-color);
 	border-spacing: 0;
@@ -81,10 +90,4 @@
 
 .produtos_venda th {
 	padding: 8px;
-}
-
-@media screen and (max-width: 600px) {
-	.vendas{
-		flex-direction: column;
-	}
 }
