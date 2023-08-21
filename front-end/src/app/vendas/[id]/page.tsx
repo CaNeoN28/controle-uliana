@@ -33,6 +33,7 @@ export default function Venda({ params }: { params: { id: string } }) {
 		return (
 			<div className={styles.venda}>
 				<div>
+					<div className={styles.titulo}>COMERCIAL DE FRUTAS GUAPORÉ</div>
 					<div className={styles.info1}>
 						<span>{new Date(venda.data_venda!).toLocaleString()}</span>
 						<span>{venda._id}</span>

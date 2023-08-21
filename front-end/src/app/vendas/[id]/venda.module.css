@@ -11,6 +11,10 @@
 	width: 100%;
 }
 
+.titulo{
+	text-align: center;
+}
+
 .info1 {
 	display: flex;
 
