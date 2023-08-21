@@ -21,6 +21,15 @@ export default class VendaRepository {
 		return vendas;
 	};
 
+	static findVenda = async function (id: string){
+		const venda = await VendaModel.findById(id)
+
+		if(!venda)
+			throw new Error("Venda não encontrada")
+
+		return venda
+	}
+
 	static updateVenda = async function ({
 		id,
 		valor_pago,
