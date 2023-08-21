@@ -51,7 +51,32 @@ export default function TelaVendas() {
 	const cancelSearch = () => {
 		setSearch("");
 		setProduto(undefined);
+		setQuantidade(undefined);
 		setProdutosPesquisa([]);
+	};
+
+	const adicionarProduto = () => {
+		if (produto && quantidade) {
+			const produtoJaAdicionado = produtosVenda.find(
+				(p) => produto.codigo == p.produto.codigo
+			);
+
+			if (produtoJaAdicionado) {
+				produtoJaAdicionado.quantidade += quantidade;
+				produtoJaAdicionado.total += quantidade * produto.preco;
+			} else {
+				setProdutosVenda([
+					...produtosVenda,
+					{
+						produto: produto,
+						quantidade: quantidade,
+						valor: produto.preco,
+						total: produto.preco * quantidade,
+					},
+				]);
+			}
+		}
+		cancelSearch();
 	};
 
 	return (
@@ -119,16 +144,7 @@ export default function TelaVendas() {
 						e.preventDefault();
 
 						if (produto && quantidade) {
-							setProdutosVenda([
-								...produtosVenda,
-								{
-									produto: produto,
-									quantidade: quantidade,
-									valor: produto.preco,
-									total: produto.preco * quantidade,
-								},
-							]);
-							cancelSearch();
+							adicionarProduto();
 						}
 					}}
 				/>
