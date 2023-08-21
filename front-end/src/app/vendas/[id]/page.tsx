@@ -34,7 +34,7 @@ export default function Venda({ params }: { params: { id: string } }) {
 			<div className={styles.venda}>
 				<div>
 					<div className={styles.info1}>
-						<span>{new Date(venda.data_venda).toLocaleString()}</span>
+						<span>{new Date(venda.data_venda!).toLocaleString()}</span>
 						<span>{venda._id}</span>
 					</div>
 					{venda.cliente && <div>Cliente: {venda.cliente}</div>}
@@ -59,7 +59,7 @@ export default function Venda({ params }: { params: { id: string } }) {
 								<td>{numberToBRL(instancia.valor)}</td>
 								<td>{instancia.quantidade}</td>
 								<td>{instancia.produto.tipo_unidade}</td>
-								<td>{numberToBRL(instancia.total)}</td>
+								<td>{numberToBRL(instancia.total!)}</td>
 							</tr>
 						))}
 					</tbody>
@@ -68,7 +68,7 @@ export default function Venda({ params }: { params: { id: string } }) {
 				<div>
 					<div className={styles.valor_total}>
 						<span>Valor total:</span>
-						<span>{numberToBRL(venda.total)}</span>
+						<span>{numberToBRL(venda.total!)}</span>
 					</div>
 					<div className={styles.info1}>
 						<span>Pago:</span>
@@ -76,7 +76,7 @@ export default function Venda({ params }: { params: { id: string } }) {
 					</div>
 					<div className={styles.info1}>
 						<span>Troco:</span>
-						<span>{numberToBRL(venda.troco)}</span>
+						<span>{numberToBRL(venda.troco!)}</span>
 					</div>
 				</div>
 
