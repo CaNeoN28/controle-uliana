@@ -1,0 +1,52 @@
+.venda {
+	display: inline-flex;
+	flex-direction: column;
+
+	gap: 16px;
+
+	font-size: 20px;
+}
+
+.linha {
+	width: 100%;
+}
+
+.info1 {
+	display: flex;
+
+	justify-content: space-between;
+}
+
+.produtos {
+	border: 1px solid black;
+
+	text-align: center;
+}
+
+.produtos tbody {
+	border: 1px solid black;
+}
+
+.produtos th {
+	padding: 4px;
+}
+
+.produtos td {
+	padding: 4px;
+}
+
+.valor_total {
+	display: flex;
+
+	font-size: 24px;
+	font-weight: bold;
+
+	justify-content: space-between;
+}
+
+.info_final{
+	text-align: center;
+
+	font-size: 20px;
+	font-weight: bold;
+}

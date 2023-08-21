@@ -33,12 +33,14 @@ export default function Venda({ params }: { params: { id: string } }) {
 		return (
 			<div className={styles.venda}>
 				<div>
-					<span>{new Date(venda.data_venda).toLocaleString()}</span>
-					<span>{venda._id}</span>
+					<div className={styles.info1}>
+						<span>{new Date(venda.data_venda).toLocaleString()}</span>
+						<span>{venda._id}</span>
+					</div>
+					{venda.cliente && <div>Cliente: {venda.cliente}</div>}
 				</div>
-				{venda.cliente && <div>Cliente: {venda.cliente}</div>}
-				<hr />
-				<table>
+				<hr className={styles.linha}/>
+				<table className={styles.produtos}>
 					<thead>
 						<tr>
 							<th>Código</th>
@@ -62,22 +64,23 @@ export default function Venda({ params }: { params: { id: string } }) {
 						))}
 					</tbody>
 				</table>
-				<hr />
+				<hr className={styles.linha}/>
 				<div>
-					<span>Total:</span>
-					<span>{numberToBRL(venda.total)}</span>
-				</div>
-				<div>
-					<span>Pago:</span>
-					<span>{numberToBRL(venda.valor_pago)}</span>
-				</div>
-				<div>
-					<span>Troco:</span>
-					<span>{numberToBRL(venda.troco)}</span>
+					<div className={styles.valor_total}>
+						<span>Valor total:</span>
+						<span>{numberToBRL(venda.total)}</span>
+					</div>
+					<div className={styles.info1}>
+						<span>Pago:</span>
+						<span>{numberToBRL(venda.valor_pago)}</span>
+					</div>
+					<div className={styles.info1}>
+						<span>Troco:</span>
+						<span>{numberToBRL(venda.troco)}</span>
+					</div>
 				</div>
 
-				<hr />
-				<div>
+				<div className={styles.info_final}>
 					Esse documento não possui valor fiscal
 				</div>
 			</div>
