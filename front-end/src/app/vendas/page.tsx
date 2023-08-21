@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./vendas.module.css";
 import Form from "@/components/Form";
 import { Controller, useForm } from "react-hook-form";
@@ -15,12 +15,6 @@ import Input from "@/components/Input";
 import { numberToBRL } from "@/utils/currency";
 
 export default function TelaVendas() {
-	const { handleSubmit, control, watch, reset, setValue } = useForm<Venda>({
-		defaultValues: {
-			cliente: "",
-		},
-	});
-
 	const fProdutos = new FetchProdutos();
 
 	const [produtosPesquisa, setProdutosPesquisa] = useState<Produto[]>([]);
@@ -36,6 +30,10 @@ export default function TelaVendas() {
 	const [produto, setProduto] = useState<Produto>();
 	const [quantidade, setQuantidade] = useState<number>();
 	const [search, setSearch] = useState("");
+
+	const [cliente, setCliente] = useState("");
+	const [total, setTotal] = useState(0);
+	const [valorPago, setValorPago] = useState(0);
 
 	const findProdutos = async (produto: string) => {
 		let response = await fProdutos.getProdutos({ nome: produto });
@@ -78,6 +76,19 @@ export default function TelaVendas() {
 		}
 		cancelSearch();
 	};
+
+	useEffect(() => {
+		if (produtosVenda.length > 0) {
+			const total = produtosVenda.reduce((prev, curr) => {
+				return {
+					...prev,
+					total: (prev.total += curr.total),
+				};
+			}).total;
+
+			setTotal(total);
+		}
+	}, [produtosVenda]);
 
 	return (
 		<main className={styles.vendas}>
@@ -176,19 +187,34 @@ export default function TelaVendas() {
 					</tbody>
 				</table>
 
-				{produtosVenda.length > 0 && (
-					<div>
-						Total:{" "}
-						{numberToBRL(
-							produtosVenda.reduce((prev, curr) => {
-								return {
-									...prev,
-									total: prev.total + curr.total,
-								};
-							}).total
-						)}
-					</div>
-				)}
+				{produtosVenda.length > 0 && <div>Total: {numberToBRL(total)}</div>}
+			</div>
+
+			<div className={styles.confirmar_venda}>
+				<Input
+					disabled={produtosVenda.length === 0}
+					id="nome_cliente"
+					label="Cliente:"
+					value={cliente}
+					onChange={(e) => setCliente(e.target.value)}
+				/>
+
+				<Input
+					disabled={produtosVenda.length === 0}
+					id="valor_pago"
+					label="Valor pago:"
+					value={valorPago}
+					type="number"
+					onChange={(e) => {
+						setValorPago(e.target.valueAsNumber);
+					}}
+				/>
+
+				<Input disabled id="total" label="Total:" value={total} />
+
+				<Input disabled id="troco" label="Troco:" value={valorPago - total} />
+
+				<Button disabled={produtosVenda.length == 0} text="Confirmar venda" />
 			</div>
 		</main>
 	);

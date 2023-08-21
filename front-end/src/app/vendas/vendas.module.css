@@ -91,3 +91,10 @@
 .produtos_venda th {
 	padding: 8px;
 }
+
+.confirmar_venda{
+	display:  flex;
+	flex-direction: column;
+
+	gap: 16px;
+}
