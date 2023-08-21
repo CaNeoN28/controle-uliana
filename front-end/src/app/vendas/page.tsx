@@ -10,12 +10,14 @@ import Button from "@/components/Button";
 import Produto from "@/types/Produtos";
 import FetchProdutos from "@/fetch/produtos";
 import "../../styles/variables.css";
-import { MdCancel } from "react-icons/md";
+import { MdCancel, MdFmdBad } from "react-icons/md";
 import Input from "@/components/Input";
 import { numberToBRL } from "@/utils/currency";
+import FetchVendas from "@/fetch/vendas";
 
 export default function TelaVendas() {
 	const fProdutos = new FetchProdutos();
+	const fVendas = new FetchVendas();
 
 	const [produtosPesquisa, setProdutosPesquisa] = useState<Produto[]>([]);
 	const [produtosVenda, setProdutosVenda] = useState<
@@ -26,6 +28,8 @@ export default function TelaVendas() {
 			total: number;
 		}[]
 	>([]);
+
+	const [erro, setErro] = useState("");
 
 	const [produto, setProduto] = useState<Produto>();
 	const [quantidade, setQuantidade] = useState<number>();
@@ -75,6 +79,34 @@ export default function TelaVendas() {
 			}
 		}
 		cancelSearch();
+	};
+
+	const cadastrarVenda = async () => {
+		try {
+			const response = await fVendas.createVenda({
+				cliente,
+				relacao_produtos: produtosVenda.map((produto) => {
+					return {
+						produto: produto.produto,
+						quantidade: produto.quantidade,
+						valor: produto.valor,
+					};
+				}),
+				valor_pago: valorPago,
+			});
+
+			const data = response.data as Venda;
+
+			window.open(`/vendas/${data._id}`, "_blank");
+
+			setProdutosVenda([]);
+			setCliente("");
+			setTotal(0);
+			setValorPago(0);
+		} catch (err) {
+			setErro("Não foi possível salvar a venda");
+			console.log(err);
+		}
 	};
 
 	useEffect(() => {
@@ -214,7 +246,16 @@ export default function TelaVendas() {
 
 				<Input disabled id="troco" label="Troco:" value={valorPago - total} />
 
-				<Button disabled={produtosVenda.length == 0} text="Confirmar venda" />
+				<Button
+					disabled={produtosVenda.length == 0}
+					text="Confirmar venda"
+					onClick={(e) => {
+						e.preventDefault;
+						cadastrarVenda();
+					}}
+				/>
+
+				{erro && erro}
 			</div>
 		</main>
 	);
