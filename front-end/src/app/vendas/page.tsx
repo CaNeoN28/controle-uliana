@@ -55,8 +55,8 @@ export default function TelaVendas() {
 	};
 
 	return (
-		<main>
-			<Form>
+		<main className={styles.vendas}>
+			<Form className={styles.adicionarProdutos}>
 				<div className={styles.procurarProdutos}>
 					<TextInput
 						id="produtos_venda"
@@ -132,34 +132,32 @@ export default function TelaVendas() {
 						}
 					}}
 				/>
-
-				{produtosVenda.length > 0 && (
-					<table className={styles.produtos_venda}>
-						<thead>
-							<tr>
-								<th>Codigo</th>
-								<th>Produto</th>
-								<th>Valor</th>
-								<th>Quantidade</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-						<tbody>
-							{produtosVenda.map((instancia, index) => {
-								return (
-									<tr key={index}>
-										<td>{instancia.produto.codigo}</td>
-										<td>{instancia.produto.nome}</td>
-										<td>{numberToBRL(instancia.valor)}</td>
-										<td>{instancia.quantidade}</td>
-										<td>{numberToBRL(instancia.total)}</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				)}
 			</Form>
+
+			<table className={styles.produtos_venda}>
+				<thead>
+					<tr>
+						<th>Codigo</th>
+						<th>Produto</th>
+						<th>Valor</th>
+						<th>Quantidade</th>
+						<th>Total</th>
+					</tr>
+				</thead>
+				<tbody>
+					{produtosVenda.map((instancia, index) => {
+						return (
+							<tr key={index}>
+								<td>{instancia.produto.codigo}</td>
+								<td>{instancia.produto.nome}</td>
+								<td>{numberToBRL(instancia.valor)}</td>
+								<td>{instancia.quantidade}</td>
+								<td>{numberToBRL(instancia.total)}</td>
+							</tr>
+						);
+					})}
+				</tbody>
+			</table>
 		</main>
 	);
 }

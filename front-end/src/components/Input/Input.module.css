@@ -3,6 +3,8 @@
 	flex-direction: column;
 
 	gap: 4px;
+
+	width: 100%;
 }
 
 .label{
@@ -11,4 +13,6 @@
 
 .input {
 	padding: 8px;
+
+	width: 100%;
 }
