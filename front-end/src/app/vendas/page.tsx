@@ -10,6 +10,7 @@ import Button from "@/components/Button";
 import Produto from "@/types/Produtos";
 import FetchProdutos from "@/fetch/produtos";
 import "../../styles/variables.css";
+import { BsFillTrashFill } from "react-icons/bs";
 import { MdCancel, MdFmdBad } from "react-icons/md";
 import Input from "@/components/Input";
 import { numberToBRL } from "@/utils/currency";
@@ -118,13 +119,13 @@ export default function TelaVendas() {
 					return prev + curr;
 				});
 
-			setTotal(soma)
+			setTotal(soma);
 		}
 	};
 
 	useEffect(() => {
-		getTotal()
-	}, [produtosVenda])
+		getTotal();
+	}, [produtosVenda]);
 
 	return (
 		<main className={styles.vendas}>
@@ -206,6 +207,7 @@ export default function TelaVendas() {
 							<th>Valor</th>
 							<th>Quantidade</th>
 							<th>Total</th>
+							<th>Opcoes</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -217,6 +219,22 @@ export default function TelaVendas() {
 									<td>{numberToBRL(instancia.valor)}</td>
 									<td>{instancia.quantidade}</td>
 									<td>{numberToBRL(instancia.total)}</td>
+									<td>
+										<div className={styles.opcoes}>
+											<a
+												onClick={(_e) => {
+													setProdutosVenda(
+														produtosVenda.filter(
+															(p) =>
+																p.produto.codigo != instancia.produto.codigo
+														)
+													);
+												}}
+											>
+												<BsFillTrashFill />
+											</a>
+										</div>
+									</td>
 								</tr>
 							);
 						})}

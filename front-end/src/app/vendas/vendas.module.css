@@ -92,6 +92,16 @@
 	padding: 8px;
 }
 
+.opcoes{
+	color: var(--primary-color);
+	display: flex;
+	justify-content: center;
+
+	gap: 8px;
+
+	align-items: center;
+}
+
 .confirmar_venda{
 	display:  flex;
 	flex-direction: column;
