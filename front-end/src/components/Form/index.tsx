@@ -9,7 +9,7 @@ interface Props extends ComponentProps<"form"> {
 export default function Form({ onSubmit, children, ...props }: Props) {
 	return (
 		<form className={styles.form} onSubmit={onSubmit} {...props}>
-			{...children}
+			{children}
 		</form>
 	);
 }

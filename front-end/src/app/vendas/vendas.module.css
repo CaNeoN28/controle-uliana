@@ -1,0 +1,106 @@
+.vendas{
+	display: flex;
+
+	flex-direction: row;
+
+	justify-content: center;
+
+	gap: 32px;
+}
+
+.adicionarProdutos{
+	display: inline-flex;
+	flex-direction: column;
+
+	gap: 16px;
+}
+
+.procurarProdutos{
+	position: relative;
+}
+
+.cancel{
+	position: absolute;
+
+	color: var(--primary-color);
+
+	cursor: pointer;
+
+	right: 8px;
+	top: 30px
+}
+
+.produtos{
+	position: absolute;
+	z-index: 999;
+
+	width: 100%;
+}
+
+.produto{
+	display: flex;
+	flex-direction: column;
+
+	width: 100%;
+	
+	border: 1px solid var(--primary-color);
+	color: var(--primary-color);
+
+	padding: 16px;
+}
+
+.produto:hover{
+	color: var(--secondary-color);
+	background-color: var(--primary-color);
+
+	cursor: pointer;
+}
+
+.venda{
+	display: flex;
+	flex-direction: column;
+
+	align-items: center;
+
+	gap: 16px;
+}
+
+.produtos_venda {
+	border: 1px solid var(--primary-color);
+	border-spacing: 0;
+	border-radius: 8px;
+
+	overflow: hidden;
+	
+	justify-content: flex-start;
+}
+
+.produtos_venda thead {
+	background-color: var(--primary-color);
+	color: var(--secondary-color)
+}
+
+.produtos_venda td {
+	padding: 8px;
+
+	border: 1px solid var(--primary-color);
+
+	text-align: center;
+}
+
+.produtos_venda th {
+	padding: 8px;
+}
+
+.confirmar_venda{
+	display:  flex;
+	flex-direction: column;
+
+	gap: 16px;
+}
+
+@media screen and (max-width: 800px) {
+	.vendas{
+		flex-direction: column;
+	}
+}

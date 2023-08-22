@@ -5,7 +5,7 @@ import Produto, { isProduto } from "@/types/Produtos";
 import { ChangeEvent, useEffect, useState } from "react";
 import styles from "./produtos.module.css";
 import { Controller, useForm } from "react-hook-form";
-import TextInput from "@/components/TextInput";
+import TextInput from "@/components/Input";
 import Form from "@/components/Form";
 import Button from "@/components/Button";
 import Select from "@/components/Select";

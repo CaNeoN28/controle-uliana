@@ -1,11 +1,17 @@
-"use client"
+"use client";
+
+import Button from "@/components/Button";
+import styles from "./styles.module.css"
 
 export default function Home() {
 	return (
-		<>
-			<a href="/produtos">
-				<button>PRODUTOS</button>
+		<div className={styles.menu}>
+			<a href="/vendas">
+				<Button text="VENDAS" />
 			</a>
-		</>
+			<a href="/produtos">
+				<Button text="PRODUTOS" />
+			</a>
+		</div>
 	);
 }
