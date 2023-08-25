@@ -68,6 +68,8 @@ export default function TelaVendas() {
 			if (produtoJaAdicionado) {
 				produtoJaAdicionado.quantidade += quantidade;
 				produtoJaAdicionado.total += quantidade * produto.preco;
+
+				getTotal()
 			} else {
 				setProdutosVenda([
 					...produtosVenda,
