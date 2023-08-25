@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "./vendas.module.css";
 import Form from "@/components/Form";
-import { Controller, useForm } from "react-hook-form";
 import Venda from "@/types/Vendas";
 import TextInput from "@/components/Input";
 import Button from "@/components/Button";
@@ -15,6 +14,8 @@ import { MdCancel, MdFmdBad } from "react-icons/md";
 import Input from "@/components/Input";
 import { numberToBRL } from "@/utils/currency";
 import FetchVendas from "@/fetch/vendas";
+import Link from "next/link";
+import Return from "@/components/Return";
 
 export default function TelaVendas() {
 	const fProdutos = new FetchProdutos();
@@ -69,7 +70,7 @@ export default function TelaVendas() {
 				produtoJaAdicionado.quantidade += quantidade;
 				produtoJaAdicionado.total += quantidade * produto.preco;
 
-				getTotal()
+				getTotal();
 			} else {
 				setProdutosVenda([
 					...produtosVenda,
@@ -130,156 +131,159 @@ export default function TelaVendas() {
 	}, [produtosVenda]);
 
 	return (
-		<main className={styles.vendas}>
-			<Form className={styles.adicionarProdutos}>
-				<div className={styles.procurarProdutos}>
-					<TextInput
-						id="produtos_venda"
-						disabled={Boolean(produto)}
-						label="Produto"
-						value={search}
-						onChange={(e) => {
-							setSearch(e.target.value);
-							findProdutos(e.target.value);
+		<main>
+			<Return to={"/"}> <span>Voltar</span></Return>
+			<div className={styles.vendas}>
+				<Form className={styles.adicionarProdutos}>
+					<div className={styles.procurarProdutos}>
+						<TextInput
+							id="produtos_venda"
+							disabled={Boolean(produto)}
+							label="Produto"
+							value={search}
+							onChange={(e) => {
+								setSearch(e.target.value);
+								findProdutos(e.target.value);
+							}}
+						/>
+
+						<a className={styles.cancel} onClick={() => cancelSearch()}>
+							<MdCancel />
+						</a>
+
+						{produtosPesquisa.length > 0 && (
+							<div className={styles.produtos}>
+								{produtosPesquisa.map((produto, index) => {
+									return (
+										<button
+											className={styles.produto}
+											key={index}
+											onClick={(e) => {
+												e.preventDefault();
+												setProduto(produto);
+												setSearch(produto.nome);
+												setProdutosPesquisa([]);
+											}}
+										>
+											<span>
+												({produto.codigo}) {produto.nome}
+											</span>
+											<span>
+												{numberToBRL(produto.preco)} {produto.tipo_unidade}
+											</span>
+										</button>
+									);
+								})}
+							</div>
+						)}
+					</div>
+					<div>
+						<Input
+							disabled={!produto}
+							id="quantidade_produto"
+							label="Quantidade:"
+							type="number"
+							value={quantidade || ""}
+							onChange={(e) => {
+								setQuantidade(Number(e.target.value));
+							}}
+						/>
+					</div>
+
+					<Button
+						disabled={!(produto && quantidade)}
+						text="Adicionar produto"
+						onClick={(e) => {
+							e.preventDefault();
+
+							if (produto && quantidade) {
+								adicionarProduto();
+							}
 						}}
 					/>
+				</Form>
 
-					<a className={styles.cancel} onClick={() => cancelSearch()}>
-						<MdCancel />
-					</a>
-
-					{produtosPesquisa.length > 0 && (
-						<div className={styles.produtos}>
-							{produtosPesquisa.map((produto, index) => {
+				<div className={styles.venda}>
+					<table className={styles.produtos_venda}>
+						<thead>
+							<tr>
+								<th>Codigo</th>
+								<th>Produto</th>
+								<th>Valor</th>
+								<th>Quantidade</th>
+								<th>Total</th>
+								<th>Opcoes</th>
+							</tr>
+						</thead>
+						<tbody>
+							{produtosVenda.map((instancia, index) => {
 								return (
-									<button
-										className={styles.produto}
-										key={index}
-										onClick={(e) => {
-											e.preventDefault();
-											setProduto(produto);
-											setSearch(produto.nome);
-											setProdutosPesquisa([]);
-										}}
-									>
-										<span>
-											({produto.codigo}) {produto.nome}
-										</span>
-										<span>
-											{numberToBRL(produto.preco)} {produto.tipo_unidade}
-										</span>
-									</button>
+									<tr key={index}>
+										<td>{instancia.produto.codigo}</td>
+										<td>{instancia.produto.nome}</td>
+										<td>{numberToBRL(instancia.valor)}</td>
+										<td>{instancia.quantidade}</td>
+										<td>{numberToBRL(instancia.total)}</td>
+										<td>
+											<div className={styles.opcoes}>
+												<a
+													onClick={(_e) => {
+														setProdutosVenda(
+															produtosVenda.filter(
+																(p) =>
+																	p.produto.codigo != instancia.produto.codigo
+															)
+														);
+													}}
+												>
+													<BsFillTrashFill />
+												</a>
+											</div>
+										</td>
+									</tr>
 								);
 							})}
-						</div>
-					)}
+						</tbody>
+					</table>
+
+					{produtosVenda.length > 0 && <div>Total: {numberToBRL(total)}</div>}
 				</div>
-				<div>
+
+				<div className={styles.confirmar_venda}>
 					<Input
-						disabled={!produto}
-						id="quantidade_produto"
-						label="Quantidade:"
+						disabled={produtosVenda.length === 0}
+						id="nome_cliente"
+						label="Cliente:"
+						value={cliente}
+						onChange={(e) => setCliente(e.target.value)}
+					/>
+
+					<Input
+						disabled={produtosVenda.length === 0}
+						id="valor_pago"
+						label="Valor pago:"
+						value={valorPago}
 						type="number"
-						value={quantidade || ""}
 						onChange={(e) => {
-							setQuantidade(Number(e.target.value));
+							setValorPago(e.target.valueAsNumber);
 						}}
 					/>
+
+					<Input disabled id="total" label="Total:" value={total} />
+
+					<Input disabled id="troco" label="Troco:" value={valorPago - total} />
+
+					<Button
+						disabled={produtosVenda.length == 0}
+						text="Confirmar venda"
+						onClick={(e) => {
+							e.preventDefault;
+							cadastrarVenda();
+						}}
+					/>
+
+					{erro && erro}
 				</div>
-
-				<Button
-					disabled={!(produto && quantidade)}
-					text="Adicionar produto"
-					onClick={(e) => {
-						e.preventDefault();
-
-						if (produto && quantidade) {
-							adicionarProduto();
-						}
-					}}
-				/>
-			</Form>
-
-			<div className={styles.venda}>
-				<table className={styles.produtos_venda}>
-					<thead>
-						<tr>
-							<th>Codigo</th>
-							<th>Produto</th>
-							<th>Valor</th>
-							<th>Quantidade</th>
-							<th>Total</th>
-							<th>Opcoes</th>
-						</tr>
-					</thead>
-					<tbody>
-						{produtosVenda.map((instancia, index) => {
-							return (
-								<tr key={index}>
-									<td>{instancia.produto.codigo}</td>
-									<td>{instancia.produto.nome}</td>
-									<td>{numberToBRL(instancia.valor)}</td>
-									<td>{instancia.quantidade}</td>
-									<td>{numberToBRL(instancia.total)}</td>
-									<td>
-										<div className={styles.opcoes}>
-											<a
-												onClick={(_e) => {
-													setProdutosVenda(
-														produtosVenda.filter(
-															(p) =>
-																p.produto.codigo != instancia.produto.codigo
-														)
-													);
-												}}
-											>
-												<BsFillTrashFill />
-											</a>
-										</div>
-									</td>
-								</tr>
-							);
-						})}
-					</tbody>
-				</table>
-
-				{produtosVenda.length > 0 && <div>Total: {numberToBRL(total)}</div>}
-			</div>
-
-			<div className={styles.confirmar_venda}>
-				<Input
-					disabled={produtosVenda.length === 0}
-					id="nome_cliente"
-					label="Cliente:"
-					value={cliente}
-					onChange={(e) => setCliente(e.target.value)}
-				/>
-
-				<Input
-					disabled={produtosVenda.length === 0}
-					id="valor_pago"
-					label="Valor pago:"
-					value={valorPago}
-					type="number"
-					onChange={(e) => {
-						setValorPago(e.target.valueAsNumber);
-					}}
-				/>
-
-				<Input disabled id="total" label="Total:" value={total} />
-
-				<Input disabled id="troco" label="Troco:" value={valorPago - total} />
-
-				<Button
-					disabled={produtosVenda.length == 0}
-					text="Confirmar venda"
-					onClick={(e) => {
-						e.preventDefault;
-						cadastrarVenda();
-					}}
-				/>
-
-				{erro && erro}
 			</div>
 		</main>
 	);

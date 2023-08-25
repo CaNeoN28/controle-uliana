@@ -1,0 +1,10 @@
+.return {
+	display: flex;
+
+	color: var(--primary-color);
+
+	text-decoration: none;
+	padding: 8px;
+
+	gap: 8px;
+}
