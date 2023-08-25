@@ -44,7 +44,6 @@ export default function Venda({ params }: { params: { id: string } }) {
 				<table className={styles.produtos}>
 					<thead>
 						<tr>
-							<th>Código</th>
 							<th>Produto</th>
 							<th>Valor</th>
 							<th>Quantidade</th>
@@ -55,7 +54,6 @@ export default function Venda({ params }: { params: { id: string } }) {
 					<tbody>
 						{venda.relacao_produtos.map((instancia, index) => (
 							<tr>
-								<td>{instancia.produto.codigo}</td>
 								<td>{instancia.produto.nome}</td>
 								<td>{numberToBRL(instancia.valor)}</td>
 								<td>{instancia.quantidade}</td>
