@@ -73,3 +73,10 @@
 	gap: 16px;
 	padding: 16px;
 }
+
+.buttons {
+	display: flex;
+	flex-direction: row-reverse;
+
+	gap: 16px;
+}

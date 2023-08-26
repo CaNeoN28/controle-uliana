@@ -236,7 +236,15 @@ export default function TelaProdutos() {
 							}}
 						/>
 
+						<div className={styles.buttons}>
 						<Button text="SALVAR" />
+						{idParaAlterar && <Button secundario text="Cancelar" onClick={(e) => {
+							e.preventDefault
+
+							setIdParaAlterar("")
+							reset()
+						}}/>}
+						</div>
 
 						{creationError && <div>{creationError}</div>}
 					</Form>
