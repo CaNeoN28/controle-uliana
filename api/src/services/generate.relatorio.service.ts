@@ -14,14 +14,14 @@ export default async function GenerateRelatorio({
 		if (isNaN(Date.parse(data_inicial)))
 			throw new Error("Data inicial inválida");
 
-		fDataInicial = new Date(data_inicial).toString() 
+		fDataInicial = new Date(data_inicial).toString()
 	}
 
 	if (data_final){
 		if(isNaN(Date.parse(data_final)))
 		throw new Error("Data final inválida");
 
-		fDataFinal = new Date(data_final).setHours(23, 59, 59).toString()
+		fDataFinal = new Date(new Date(data_final).setHours(23, 59, 59)).toString()
 	}
 
 	const relatorio = await RepositoryRelatorio.getRelatorio({
