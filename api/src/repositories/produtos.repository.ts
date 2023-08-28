@@ -1,4 +1,4 @@
-import Produto from "../models/Produto";
+import ProdutoModel from "../models/Produto";
 import FiltrosProdutos from "../types/FiltrosProdutos";
 import { PaginationOptions } from "../types/Paginate";
 
@@ -15,10 +15,10 @@ class RepositoryProdutos {
 
 		if (codigo) filtros.codigo = new RegExp(codigo, "i");
 
-		const totalDocuments = await Produto.countDocuments(filtros);
+		const totalDocuments = await ProdutoModel.countDocuments(filtros);
 		const totalPages = Math.ceil(totalDocuments / limit);
 
-		const produtos = await Produto.find(filtros).sort({codigo: 1}).skip(limit * (page - 1)).limit(limit);
+		const produtos = await ProdutoModel.find(filtros).sort({codigo: 1}).skip(limit * (page - 1)).limit(limit);
 
 		return {
 			produtos,
@@ -28,7 +28,7 @@ class RepositoryProdutos {
 	};
 
 	static create = async function (data: any) {
-		const produto = new Produto(data);
+		const produto = new ProdutoModel(data);
 
 		await produto.validate();
 
@@ -38,7 +38,7 @@ class RepositoryProdutos {
 	};
 
 	static find = async function (id: string) {
-		const produto = await Produto.findById(id);
+		const produto = await ProdutoModel.findById(id);
 
 		if (!produto) throw new Error("Produto não encontrado");
 
@@ -46,7 +46,7 @@ class RepositoryProdutos {
 	};
 
 	static findByCode = async function (codigo: string) {
-		const produto = await Produto.findOne({codigo: new RegExp(codigo, 'i')})
+		const produto = await ProdutoModel.findOne({codigo: new RegExp(codigo, 'i')})
 
 		if(!produto) throw new Error("Produto não encontrado")
 
@@ -58,7 +58,7 @@ class RepositoryProdutos {
 
 		await produto.updateOne(data);
 
-		const newProduto = await Produto.findById(id)!;
+		const newProduto = await ProdutoModel.findById(id)!;
 
 		return newProduto;
 	};
