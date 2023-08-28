@@ -20,7 +20,7 @@ export default class RepositoryRelatorio {
 			produtos: [],
 		};
 
-		const produtos = await ProdutoModel.find();
+		const produtos = await ProdutoModel.find({}).sort({nome: 1});
 
 		let filtros_data: { $gte?: string; $lte?: string } | undefined = {};
 		const filtros: any = {};
@@ -50,6 +50,11 @@ export default class RepositoryRelatorio {
 					_id: { $dateToString: { format: "%Y/%m/%d", date: "$data_venda" } },
 					vendas: { $push: "$$ROOT" },
 				},
+			},
+			{
+				$sort: {
+					_id: 1
+				}
 			}
 		]);
 
