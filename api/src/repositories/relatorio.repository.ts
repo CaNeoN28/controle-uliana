@@ -63,7 +63,7 @@ export default class RepositoryRelatorio {
 				const valores: {quantidade: number, total: number}[] = []
 
 				let quantidade = 0
-				let valor = 0
+				let total = 0
 
 				vendaData.vendas.map((venda: Venda) => {
 					const rp = venda.relacao_produtos.find((p) => {
@@ -75,15 +75,13 @@ export default class RepositoryRelatorio {
 					if (rp) {
 						valores.push({
 							quantidade: rp.quantidade,
-							total: rp.total
+							total: rp.total,
 						})
 					}
 				})
 
 				if(valores.length > 0){
 					const {quantidade: q, total: t} = valores.reduce((prev, curr) => {
-						const total = curr.total * curr.quantidade
-
 						return{
 							quantidade: prev.quantidade + curr.quantidade,
 							total: prev.total + curr.total
@@ -91,26 +89,29 @@ export default class RepositoryRelatorio {
 					})
 
 					quantidade = q
-					valor = t / q
+					total = t
 				}
-
-				console.log({
-					produto: produto.nome,
-					quantidade,
-					valor: valor
-				})
 
 				return {
 					dia: vendaData._id,
 					quantidade: quantidade,
-					valor: Number(valor.toFixed(2)),
+					total: Number(total.toFixed(2)),
 				};
 			});
 
+			const { quantidade, total} = vendas.reduce((prev, curr) => {
+				return {
+					dia: prev.dia,
+					quantidade: prev.quantidade + curr.quantidade,
+					total: prev.total + curr.total
+				}
+			})
+
 			return {
 				nome: produto.nome,
-				preco_medio: 0,
-				total: 0,
+				quantidade: quantidade,
+				preco_medio: Number((total / quantidade).toFixed(2)),
+				total: total,
 				vendas: vendas,
 			};
 		});

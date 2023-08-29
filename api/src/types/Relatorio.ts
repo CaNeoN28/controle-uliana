@@ -5,7 +5,7 @@ export interface ProdutoRelatorio {
 	vendas: {
 		dia: string;
 		quantidade: number;
-		valor: number;
+		total: number;
 	}[];
 }
 
