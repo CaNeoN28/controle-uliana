@@ -20,7 +20,7 @@ export default class RepositoryRelatorio {
 			produtos: [],
 		};
 
-		const produtos = await ProdutoModel.find({}).sort({nome: 1});
+		const produtos = await ProdutoModel.find({}).sort({ nome: 1 });
 
 		let filtros_data: { $gte?: string; $lte?: string } | undefined = {};
 		const filtros: any = {};
@@ -53,21 +53,60 @@ export default class RepositoryRelatorio {
 			},
 			{
 				$sort: {
-					_id: 1
-				}
-			}
+					_id: 1,
+				},
+			},
 		]);
 
 		let produtosRelatorio: ProdutoRelatorio[] = produtos.map((produto) => {
-			
-			const vendas = vendasData.map(vendaData => {
+			const vendas = vendasData.map((vendaData) => {
+				const valores: {quantidade: number, total: number}[] = []
+
+				let quantidade = 0
+				let valor = 0
+
+				vendaData.vendas.map((venda: Venda) => {
+					const rp = venda.relacao_produtos.find((p) => {
+						const id = p.produto.toString();
+
+						return produto.id == id;
+					});
+
+					if (rp) {
+						valores.push({
+							quantidade: rp.quantidade,
+							total: rp.total
+						})
+					}
+				})
+
+				if(valores.length > 0){
+					const {quantidade: q, total: t} = valores.reduce((prev, curr) => {
+						const total = curr.total * curr.quantidade
+
+						return{
+							quantidade: prev.quantidade + curr.quantidade,
+							total: prev.total + curr.total
+						}
+					})
+
+					quantidade = q
+					valor = t / q
+				}
+
+				console.log({
+					produto: produto.nome,
+					quantidade,
+					valor: valor
+				})
+
 				return {
 					dia: vendaData._id,
-					quantidade: 0,
-					valor: 0
-				}
-			})
-			
+					quantidade: quantidade,
+					valor: Number(valor.toFixed(2)),
+				};
+			});
+
 			return {
 				nome: produto.nome,
 				preco_medio: 0,
@@ -76,7 +115,7 @@ export default class RepositoryRelatorio {
 			};
 		});
 
-		relatorio.produtos = produtosRelatorio
+		relatorio.produtos = produtosRelatorio;
 
 		return relatorio;
 	};
