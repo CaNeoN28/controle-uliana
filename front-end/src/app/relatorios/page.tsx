@@ -13,22 +13,22 @@ export default function Relatorios() {
 	const [dataFinal, setDataFinal] = useState("");
 
 	useEffect(() => {
-		const di = new Date(dataInicial)
-		const df = new Date(dataFinal)
+		const di = new Date(dataInicial);
+		const df = new Date(dataFinal);
 
-		if(dataInicial && dataFinal && di > df){
-			setDataFinal(dataInicial)
+		if (dataInicial && dataFinal && di > df) {
+			setDataFinal(dataInicial);
 		}
 	}, [dataInicial]);
 
 	useEffect(() => {
-		const di = new Date(dataInicial)
-		const df = new Date(dataFinal)
+		const di = new Date(dataInicial);
+		const df = new Date(dataFinal);
 
-		if(dataInicial && dataFinal && di > df){
-			setDataInicial(dataFinal)
+		if (dataInicial && dataFinal && di > df) {
+			setDataInicial(dataFinal);
 		}
-	}, [dataFinal])
+	}, [dataFinal]);
 
 	return (
 		<main>
@@ -56,10 +56,9 @@ export default function Relatorios() {
 					onClick={(e) => {
 						e.preventDefault();
 
-						console.log({
-							dataInicial,
-							dataFinal,
-						});
+						window.open(
+							`/relatorios/relatorio?dataInicial=${dataInicial}&dataFinal=${dataFinal}`
+						);
 					}}
 				/>
 			</div>
