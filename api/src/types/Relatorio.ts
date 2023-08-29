@@ -13,5 +13,6 @@ export interface ProdutoRelatorio {
 export default interface Relatorio {
 	data_inicial?: string;
 	data_final?: string;
+	dias: String[]
 	produtos: ProdutoRelatorio[];
 }

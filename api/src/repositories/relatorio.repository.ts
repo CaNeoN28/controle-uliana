@@ -18,6 +18,7 @@ export default class RepositoryRelatorio {
 					? data_inicial
 					: undefined,
 			produtos: [],
+			dias: []
 		};
 
 		const produtos = await ProdutoModel.find({}).sort({ nome: 1 });
@@ -57,6 +58,8 @@ export default class RepositoryRelatorio {
 				},
 			},
 		]);
+
+		relatorio.dias = vendasData.map(v => v._id) 
 
 		let produtosRelatorio: ProdutoRelatorio[] = produtos.map((produto) => {
 			const vendas = vendasData.map((vendaData) => {
