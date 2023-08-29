@@ -92,9 +92,12 @@ export default class RepositoryRelatorio {
 					total = t
 				}
 
+				const valor = Number((total / quantidade).toFixed(2))
+
 				return {
 					dia: vendaData._id,
 					quantidade: quantidade,
+					valor: valor,
 					total: Number(total.toFixed(2)),
 				};
 			});
@@ -103,6 +106,7 @@ export default class RepositoryRelatorio {
 				return {
 					dia: prev.dia,
 					quantidade: prev.quantidade + curr.quantidade,
+					valor: prev.valor,
 					total: prev.total + curr.total
 				}
 			})
