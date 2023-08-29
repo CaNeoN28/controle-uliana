@@ -2,7 +2,7 @@
 
 import Input from "@/components/Input";
 import Return from "@/components/Return";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
 import styles from "./relatorios.module.css";
 
@@ -11,6 +11,24 @@ import "../../styles/variables.css";
 export default function Relatorios() {
 	const [dataInicial, setDataInicial] = useState("");
 	const [dataFinal, setDataFinal] = useState("");
+
+	useEffect(() => {
+		const di = new Date(dataInicial)
+		const df = new Date(dataFinal)
+
+		if(dataInicial && dataFinal && di > df){
+			setDataFinal(dataInicial)
+		}
+	}, [dataInicial]);
+
+	useEffect(() => {
+		const di = new Date(dataInicial)
+		const df = new Date(dataFinal)
+
+		if(dataInicial && dataFinal && di > df){
+			setDataInicial(dataFinal)
+		}
+	}, [dataFinal])
 
 	return (
 		<main>
