@@ -12,6 +12,9 @@ export default function Home() {
 			<a href="/produtos">
 				<Button text="PRODUTOS" />
 			</a>
+			<a href="/relatorios">
+				<Button text="RELATÓRIOS"/>
+			</a>
 		</div>
 	);
 }
