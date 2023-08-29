@@ -18,7 +18,7 @@ export default class RepositoryRelatorio {
 					? data_inicial
 					: undefined,
 			produtos: [],
-			dias: []
+			dias: [],
 		};
 
 		const produtos = await ProdutoModel.find({}).sort({ nome: 1 });
@@ -59,14 +59,14 @@ export default class RepositoryRelatorio {
 			},
 		]);
 
-		relatorio.dias = vendasData.map(v => v._id) 
+		relatorio.dias = vendasData.map((v) => v._id);
 
 		let produtosRelatorio: ProdutoRelatorio[] = produtos.map((produto) => {
 			const vendas = vendasData.map((vendaData) => {
-				const valores: {quantidade: number, total: number}[] = []
+				const valores: { quantidade: number; total: number }[] = [];
 
-				let quantidade = 0
-				let total = 0
+				let quantidade = 0;
+				let total = 0;
 
 				vendaData.vendas.map((venda: Venda) => {
 					const rp = venda.relacao_produtos.find((p) => {
@@ -79,23 +79,23 @@ export default class RepositoryRelatorio {
 						valores.push({
 							quantidade: rp.quantidade,
 							total: rp.total,
-						})
+						});
 					}
-				})
+				});
 
-				if(valores.length > 0){
-					const {quantidade: q, total: t} = valores.reduce((prev, curr) => {
-						return{
+				if (valores.length > 0) {
+					const { quantidade: q, total: t } = valores.reduce((prev, curr) => {
+						return {
 							quantidade: prev.quantidade + curr.quantidade,
-							total: prev.total + curr.total
-						}
-					})
+							total: prev.total + curr.total,
+						};
+					});
 
-					quantidade = q
-					total = t
+					quantidade = q;
+					total = t;
 				}
 
-				const valor = Number((total / quantidade).toFixed(2))
+				const valor = Number((total / quantidade).toFixed(2));
 
 				return {
 					dia: vendaData._id,
@@ -105,14 +105,22 @@ export default class RepositoryRelatorio {
 				};
 			});
 
-			const { quantidade, total} = vendas.reduce((prev, curr) => {
-				return {
-					dia: prev.dia,
-					quantidade: prev.quantidade + curr.quantidade,
-					valor: prev.valor,
-					total: prev.total + curr.total
-				}
-			})
+			let quantidade = 0;
+			let total = 0;
+
+			if (vendas.length > 0) {
+				const { quantidade: q, total: t } = vendas.reduce((prev, curr) => {
+					return {
+						dia: prev.dia,
+						quantidade: prev.quantidade + curr.quantidade,
+						valor: prev.valor,
+						total: prev.total + curr.total,
+					};
+				});
+
+				quantidade = q
+				total = t
+			}
 
 			return {
 				nome: produto.nome,
