@@ -3,7 +3,7 @@
 import FetchRelatorios from "@/fetch/relatorios";
 import Relatorio from "@/types/Relatorio";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./relatorio.module.css";
 import { numberToBRL } from "@/utils/currency";
 
@@ -19,7 +19,7 @@ export default function Relatorio() {
 
 		if (dataFinal && dataInicial) {
 			dataInicial = dataInicial.replaceAll("-", "/")
-			dataFinal = 	dataFinal.replaceAll("-", "/")
+			dataFinal = dataFinal.replaceAll("-", "/")
 
 			const relatorio = await fRelatorio
 				.gerar({ dataFinal, dataInicial })
@@ -51,6 +51,7 @@ export default function Relatorio() {
 									</td>
 								);
 							})}
+							<td>Quantidade</td>
 							<td>Preco médio</td>
 							<td>Total</td>
 						</tr>
@@ -68,8 +69,9 @@ export default function Relatorio() {
 											</div>
 										</td>
 									))}
-									<td>{produto.preco_medio}</td>
-									<td>{produto.total}</td>
+									<td>{produto.quantidade}</td>
+									<td>{numberToBRL(produto.preco_medio)}</td>
+									<td>{numberToBRL(produto.total)}</td>
 								</tr>
 							);
 						})}

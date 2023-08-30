@@ -12,7 +12,7 @@ export default class FetchRelatorios {
 	}) {
 		const relatorio = (
 			await axios.get(
-				`${API_URL}/relatorio?dataInicial=${dataInicial}&dataFinal=${dataFinal}`
+				`${API_URL}/relatorio?data_inicial=${dataInicial}&data_final=${dataFinal}`
 			)
 		).data as Relatorio;
 
