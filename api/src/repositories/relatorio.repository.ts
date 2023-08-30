@@ -99,7 +99,7 @@ export default class RepositoryRelatorio {
 
 				return {
 					dia: vendaData._id,
-					quantidade: quantidade,
+					quantidade: Number(quantidade.toFixed(2)),
 					valor: valor,
 					total: Number(total.toFixed(2)),
 				};
@@ -124,9 +124,9 @@ export default class RepositoryRelatorio {
 
 			return {
 				nome: produto.nome,
-				quantidade: quantidade,
+				quantidade: Number((quantidade).toFixed(2)),
 				preco_medio: Number((total / quantidade).toFixed(2)),
-				total: total,
+				total: Number(total.toFixed(2)),
 				vendas: vendas,
 			};
 		});
