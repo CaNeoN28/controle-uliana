@@ -36,6 +36,11 @@ export default function Relatorio() {
 		getRelatorio()
 	}, []);
 
+	useEffect(() => {
+		if(relatorio)
+			window.print()
+	}, [relatorio])
+
 	return (
 		<main>
 			{relatorio && (
@@ -47,7 +52,7 @@ export default function Relatorio() {
 								const fdia = new Date(dia);
 								return (
 									<td key={index}>
-										{fdia.getDate()}/{fdia.getMonth() + 1}
+										{fdia.getDate()}/{(fdia.getMonth() + 1).toString().padStart(2, "0")}
 									</td>
 								);
 							})}
