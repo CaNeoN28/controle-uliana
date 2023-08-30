@@ -2,6 +2,7 @@ export interface ProdutoRelatorio {
 	nome: string;
 	total: number;
 	preco_medio: number;
+	quantidade: number,
 	vendas: {
 		dia: string;
 		quantidade: number;

@@ -23,16 +23,16 @@ export default class RepositoryRelatorio {
 
 		const produtos = await ProdutoModel.find({}).sort({ nome: 1 });
 
-		let filtros_data: { $gte?: string; $lte?: string } | undefined = {};
+		let filtros_data: { $gte?: any; $lte?: any } | undefined = {};
 		const filtros: any = {};
 
 		if (data_inicial || data_final) {
 			if (data_inicial) {
-				filtros_data.$gte = data_inicial;
+				filtros_data.$gte = new Date(data_inicial);
 			}
 
 			if (data_final) {
-				filtros_data.$lte = data_final;
+				filtros_data.$lte = new Date(data_final);
 			}
 
 			filtros.data_venda = filtros_data;
