@@ -29,6 +29,11 @@ export default function Venda({ params }: { params: { id: string } }) {
 		getVenda();
 	}, []);
 
+	useEffect(() => {
+		if(venda)
+			window.print()
+	}, [venda])
+
 	if (venda)
 		return (
 			<div className={styles.venda}>
