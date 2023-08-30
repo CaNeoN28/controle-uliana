@@ -3,7 +3,7 @@
 import FetchRelatorios from "@/fetch/relatorios";
 import Relatorio from "@/types/Relatorio";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import styles from "./relatorio.module.css";
 import { numberToBRL } from "@/utils/currency";
 
@@ -11,34 +11,30 @@ export default function Relatorio() {
 	const params = useSearchParams();
 	const fRelatorio = new FetchRelatorios();
 
-	const [dataInicial, setDataInicial] = useState("");
-	const [dataFinal, setDataFinal] = useState("");
-
 	const [relatorio, setRelatorio] = useState<Relatorio>();
 
 	const getRelatorio = async () => {
-		const relatorio = await fRelatorio
-			.gerar({ dataFinal, dataInicial })
-			.then((res) => res)
-			.catch((err) => {
-				console.log(err);
-			});
+		let dataInicial = params.get("dataInicial");
+		let dataFinal = params.get("dataFinal");
 
-		if (relatorio) setRelatorio(relatorio);
+		if (dataFinal && dataInicial) {
+			dataInicial = dataInicial.replaceAll("-", "/")
+			dataFinal = 	dataFinal.replaceAll("-", "/")
+
+			const relatorio = await fRelatorio
+				.gerar({ dataFinal, dataInicial })
+				.then((res) => res)
+				.catch((err) => {
+					console.log(err);
+				});
+
+			if (relatorio) setRelatorio(relatorio);
+		}
 	};
 
 	useEffect(() => {
-		const dataInicial = params.get("dataInicial");
-		const dataFinal = params.get("dataFinal");
-
-		if (dataInicial) setDataInicial(dataInicial);
-
-		if (dataFinal) setDataFinal(dataFinal);
+		getRelatorio()
 	}, []);
-
-	useEffect(() => {
-		getRelatorio();
-	}, [dataInicial]);
 
 	return (
 		<main>
@@ -62,10 +58,10 @@ export default function Relatorio() {
 					<tbody>
 						{relatorio.produtos.map((produto, index) => {
 							return (
-								<tr>
+								<tr key={index}>
 									<td>{produto.nome}</td>
 									{produto.vendas.map((venda, j) => (
-										<td>
+										<td key={j}>
 											<div className={styles.diario}>
 												<div>{venda.quantidade}</div>
 												<div>{numberToBRL(venda.total)}</div>

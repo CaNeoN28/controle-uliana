@@ -10,13 +10,12 @@ export default class FetchRelatorios {
 		dataInicial: string;
 		dataFinal: string;
 	}) {
-		const relatorio = (await axios.get(`${API_URL}/relatorio`, {
-			params: {
-				data_inicial: dataInicial,
-				data_final: dataFinal
-			}
-		})).data as Relatorio
+		const relatorio = (
+			await axios.get(
+				`${API_URL}/relatorio?dataInicial=${dataInicial}&dataFinal=${dataFinal}`
+			)
+		).data as Relatorio;
 
-		return relatorio
+		return relatorio;
 	};
 }
