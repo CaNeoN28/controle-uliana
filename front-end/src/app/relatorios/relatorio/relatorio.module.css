@@ -1,0 +1,20 @@
+.relatorio {
+	border-spacing: 0;
+}
+
+.relatorio thead {
+	font-weight: bold;
+}
+
+.relatorio td {
+	padding: 8px;
+	border: 1px solid black;
+
+	text-align: center;
+}
+
+.diario {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+}
