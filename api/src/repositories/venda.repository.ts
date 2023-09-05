@@ -48,4 +48,12 @@ export default class VendaRepository {
 
 		return venda
 	};
+
+	static deleteVenda = async function(id: string){
+		const venda = await VendaModel.findById(id)
+
+		if(!venda) throw new Error("Venda não encontrada")
+
+		await venda.deleteOne()
+	}
 }
