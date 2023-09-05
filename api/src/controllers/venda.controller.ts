@@ -4,6 +4,7 @@ import CreateVenda from "../services/create.venda.service";
 import ListVendas from "../services/list.vendas.service";
 import UpdateVenda from "../services/update.venda.service";
 import FindVenda from "../services/find.vendas.service";
+import DeleteVenda from "../services/delete.venda.service";
 
 export default class VendaController {
 	static post: RequestHandler = async function (req, res, next) {
@@ -58,6 +59,18 @@ export default class VendaController {
 			});
 
 			res.status(200).send(venda);
+		} catch (error) {
+			next(error);
+		}
+	};
+
+	static remove: RequestHandler = async function (req, res, next) {
+		try {
+			const { id } = req.params;
+
+			await DeleteVenda(id);
+
+			res.status(204).send({});
 		} catch (error) {
 			next(error);
 		}

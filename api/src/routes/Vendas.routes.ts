@@ -8,7 +8,8 @@ vendasRouter.route("/venda").post(VendaController.post);
 vendasRouter
 	.route("/venda/:id")
 	.put(VendaController.update)
-	.get(VendaController.find);
+	.get(VendaController.find)
+	.delete(VendaController.remove);
 
 vendasRouter.route("/vendas").get(VendaController.get);
 
